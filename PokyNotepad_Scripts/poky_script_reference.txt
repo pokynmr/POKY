@@ -1,0 +1,350 @@
+# -----------------------------------------------------------------------------
+# Python classes and functions for accessing Poky data.
+#
+# The module 'poke' written in C++ defines the classes and functions for
+# accessing Poky data.  This file describes the interface.
+#
+# The Poky classes are Session, Project, Spectrum, Peak, Resonance, Label,
+# Line, Grid, Molecule, Condition, View.
+#
+# Here are the data members and methods of these classes:
+#
+# -----------------------------------------------------------------------------
+#
+#	class Session:
+#
+#	  __init__(tk)
+#
+#         project = <Project instance>
+#
+#         open_file('bpti.proj') = 0 or 1       # Open nmr data or Poky file
+#         open_spectrum('/home/woonghee/Poky/Save/hsqc.save') = <Spectrum>
+#         open_directorydialog('message', initdir) = directory name
+#         open_filedialog('message', 'Any (*);; Save (*.save);;', initdir) =
+#                                                                   file name
+#         open_filesdialog('message', 'Any (*);; Save (*.save);;', initdir) =
+#                                                     tab delimited file names
+#         save_filedialog('message', 'Any (*);; Save (*.save);;', initdir) =
+#                                                                   file name
+#         show_message('title', 'message')
+#         show_message_yes_no('title', 'message')
+#         show_message_yes_no_cancel('title', 'message')
+#         show_selectiondialog('title', 'message', ('button1', 'button2'...))
+#                                             = 0 or 1 or 2 ... max: 9 buttons
+#         show_selectionexdialog('title', 'message', ('button1', 'button2'...))
+#                                             = 0 or 1 or 2 ... no max.
+#         show_customselectiondialog('title', ('item1','item2','item3'), 0 or 1) # 0 or 1: multiselect
+#         show_spectrumselectiondialog('title', 0 or 1)   # 0 or 1: multiselect
+#         show_viewselectiondialog('title', 0 or 1)       # 0 or 1: multiselect
+#         show_conditionselectiondialog('title', 0 or 1)  # 0 or 1: multiselect
+#                                               # use split('\t') to parse multi-items
+#         show_inputdialog('title','message','default') = user input
+#         open_notepad('some_file.txt')         # Open Poky Notepad
+#         open_ndpplot('some_file_path')        # Open NDP-PLOT
+#         open_pymol('some_file_path')          # Open Pymol
+#         set_clipboard('some text')            # Set clipboard text
+#         command_characters(string)            # Process key presses
+#
+#         create_view(parent_window, <Spectrum>) # top level window created if
+#                                               #   parent is None
+#         selected_view() = <View>              # can be None
+#         selected_spectrum() = <Spectrum>      # can be None
+#         selected_peaks()                      # Currently selected peaks
+#         selected_ornaments()			# Selected peaks, labels, ...
+#         unselect_all_ornaments()
+#         report_information('information message') # report in mainwindow
+#         report_warning('warning message') # report in mainwindow
+#         set_verbose(True)               # Enable/disable poky message pop ups
+#
+#         Callbacks from the C++ code.
+#
+#              Notice type           Callback arguments
+#           -------------------------------------------
+#           'selection changed'                 None
+#           'drag region'                       tuple (min_ppm, max_ppm)
+#           'will drag peak'                    Peak
+#           'peak dragged'                      Peak
+#           'removed spectrum from project'     Spectrum
+#           'added spectrum to project'         Spectrum
+#     	    'pointer mode changed'              None
+#
+#         notify_me(notice_type, callback) = <ID>
+#         dont_notify_me(<ID>)
+#
+#         add_input_callback(file, callback) = <ID>     # only on Unix
+#         remove_input_callback(<ID>)
+#
+#         add_command(accel, menu_text, func)   # Add a Poky command
+#         show_manual_url(manual_url)           # Show manual using Netscape
+#         show_peak_list(peak_list)		# Show a peak list window
+#         show_resonance_peak_list(res)		# List peaks for resonance
+#
+#         quit_poky()                           # quit poky
+#
+#	  pointer_mode = "select"  # Can be "select", "center", "addGridBoth",
+#				   # "addGridHorz", "addGridVert", "addLabel",
+#				   # "addLine", "findAddPeak", "integrate",
+#				   # "zoom", "duplicateZoom", "assignCopy",
+#				   # "assignGuess"
+#
+# -----------------------------------------------------------------------------
+#
+#	class Project:
+#
+#	  save_path = '/home/woonghee_lee/Poky/Projects/abc.proj'
+#	  poky_directory = '/home/woonghee_lee/Poky'
+#
+#	  spectrum_list() = list of <Spectrum>
+#	  view_list() = list of <View>
+#	  molecule_list() = list of <Molecule>
+#	  condition_list() = list of <Condition>
+#   create_dataless_spectrum(name, size, block_size,
+#                            spectrometer_freq_mhz, spectrum_width_hz,
+#                            origin_ppm, axis_labels) = <Spectrum>
+#   save_value(key, value)                # key = string w/o spaces
+#   saved_value(key)                      # value = string w/o newlines
+#   close(ask) = 0 or 1
+#
+#	  overlay_list() = list of <Overlay>
+#   add_overlay(from, onto)
+#   remove_overlay(from, onto)
+#
+# -----------------------------------------------------------------------------
+#
+#	class Overlay:
+#
+#   overlay_from() = class of <View>
+#   overlay_onto() = class of <View>
+#
+# -----------------------------------------------------------------------------
+#
+#	class Spectrum:
+#
+#	  name = 'noesy150'           # spectrum name
+#   desc = 'user description'   # spectrum description (max 4096 characters)
+#	  dimension = 2               # number of axes
+#	  data_size = (2048, 4096)		# size along each axis
+#	  nuclei = ('1H', '1H')       # '1H', '13C', '15N' for axes
+#	  hz_per_ppm = (500.123, 500.123)
+#   spectrum_width = (11.205, 11.203)     # ppm
+#   sweep_width = (11.205, 11.203)        # ppm
+#	  region = ((.4, -.5), (11.6, 10.7))    # (min-ppm, max-ppm)
+#   scale_offset = (0, 0)                 # ppm, settable
+#	  noise = 22178.21            # data height noise
+#	  condition = <Condition>
+#	  molecule = <Molecule>
+#	  data_path = '/data/bigdisk/noesy150.ucsf'   # nmr data
+#	  save_path = '/home/woonghee_lee/Poky/Save/noesy150.save'
+#   pick_minimum_linewidth = (.04, .04)   # for peak picking with mouse
+#   pick_minimum_drop_factor = .5
+#   session = <Session>
+#
+#	  peak_list()
+#	  selected_peaks()
+#	  label_list()
+#	  line_list()
+#	  grid_list()
+#  	data_height((2.87, 4.334)) = 321833.23
+#	  find_peak(<Resonance list>) = <Peak>  # can be None
+#	  find_peak('G18H8-T17H6') = <Peak>	# can be None
+#   pick_peaks(((4.3, 2.1), (5.3, 8.4)),  # region
+#               (-100000, 100000),        # height thresholds
+#               (.04, .04),               # minimum linewidths
+#               .5)                       # minimum drop off
+#               = List of <Peak>
+#   place_peak((4.123, 8.321)) = <peak>
+#   place_label(label, color, (4.123, 8.321)) = <label>
+#   save_value(key, value)                # key = string w/o spaces
+#   saved_value(key)                      # value = string w/o newlines
+#   set_molecule_condition('molecule', 'condition')
+#
+# -----------------------------------------------------------------------------
+#
+#	class Peak:
+#
+#	  assignment = 'C6H5-C5H1'	# '?-?' for unassigned
+#	  is_assigned = 1			      # all axes assigned
+#   position = (4.35, 5.12)		# in ppm
+#	  alias = (0, 0)			      # in ppm
+#	  frequency = (4.35, 5.12)	# frequency = position + alias
+#	  spectrum = <Spectrum>
+#	  data_height = 104334.23		# closest NMR data value
+#                             #  returns None for peak groups
+#	  volume = 1.23e7			      # can be None
+#	  volume_method = 'gaussian'		# '', 'gaussian', 'lorentzian',
+#						                      # 'voigt', 'box',
+#						                      # 'ellipse', 'peak-group'
+#	  volume_error = .15			  # error estimate fraction
+#	  volume_error_method = 'manual'	# any string
+#	  fit_height = 105783.11		# can be None
+#	  line_width = (.024, .031)	# ppm, can be None
+#	  line_width_method = 'fit'	# any string
+#	  note = 'bad overlap'			# settable
+#
+#	  selected = 0				      # 0 or 1, settable
+#	  color = 'white'			      # 'red', 'blue', ... settable
+#	  label = <Label>           # can be None
+#
+#	  resonances()				      # tuple of resonances
+#	  peaklets()				        # peak group sub-peaks
+#	  assign(1, 'C2', "H1'")		# Make assignment for an axis
+#	  fit(<View>)               # Fit a Gaussian to peak
+#	  center() = 0 or 1			    # Move peak to local maximum
+#	  show_assignment_label() = <Label>
+#	  show_label('some text') = <Label>
+#   move(4.35, 5.12)          # Move peak to the user frequency
+#
+# -----------------------------------------------------------------------------
+#
+#	class Resonance:
+#
+#	  name = "A17H3'"			# group/atom name
+#	  atom = <Atom>
+#	  group = <Group>
+#	  frequency = 3.279			# in ppm
+#	  deviation = .0143			# one standard deviation (ppm)
+#	  condition = <Condition>
+#   peak_count = 3
+#
+#	  peak_list()
+#
+# -----------------------------------------------------------------------------
+#
+#	class Label:
+#
+#	  __init__(self, spectrum, label, color, position)
+#
+#	  text = "T12H6-G13H1'"
+#	  shows_assignment = 1    # 0 or 1
+#	  selected = 1            # 0 or 1, settable
+#	  color = 'green'         # 'red', 'blue', ... settable
+#	  peak = <Peak>           # attached peak
+#
+# -----------------------------------------------------------------------------
+#
+#	class Line:
+#
+#	  __init__(spectrum, start, end)
+#
+#	  start = (7.32, 2.43)    # in ppm
+#	  end = (7.49, 2.43)			# in ppm
+#	  selected = 1            # 0 or 1, settable
+#	  color = 'purple'        # 'red', 'blue', ... settable
+#
+# -----------------------------------------------------------------------------
+#
+#	class Grid:
+#
+#	  position = (5.87, 8.21) # in ppm
+#	  axis = 0                # 0, 1, ..., dim - 1
+#	  selected = 0            # 0 or 1, settable
+#	  color = 'yellow'        # 'red', 'blue', ... settable
+#
+# -----------------------------------------------------------------------------
+#
+#	class Molecule:
+#
+#	  name = '24mer'
+#         session = <Session>
+#
+#	  atom_list()
+#	  atom(group_name, atom_name)		# atom object, or None
+#	  group_list()
+#	  condition_list()
+#   save_value(key, value)    # key = string w/o spaces
+#   saved_value(key)          # value = string w/o newlines
+#
+# -----------------------------------------------------------------------------
+#
+#	class Group:
+#
+#	  name = 'T12a'
+#	  symbol = 'T'
+#	  number = 12               # can be None
+#   suffix = 'a'              # can be empty string
+#
+# -----------------------------------------------------------------------------
+#
+#	class Atom:
+#
+#	  name = 'H3'
+#   nucleus = '1H'            # '1H', '13C', '15N', '19F', '31P'
+#	  group = <Group>
+#
+# -----------------------------------------------------------------------------
+#
+#	class Condition:
+#
+#	  name = 'ph7 25C'
+#	  molecule = <Molecule>
+#
+#	  resonance_list()
+#	  interval_resonances(ppm_min, ppm_max,         # tuple of resonances
+#                       nucleus, alias_min, alias_max)
+#	  find_resonance(<Atom>)                # returns resonance or None
+#	  find_resonance(group_name, atom_name)	# returns resonance or None
+#
+# -----------------------------------------------------------------------------
+#
+#	class View:
+#
+#	  name = 'n15noesy'
+#	  spectrum = <Spectrum>
+#   session = <Session>
+#	  is_shown = 1                          # 0 or 1, settable
+#   is_top_level_window = 1               # 0 or 1
+#   frame = '.strips.view'                # path of Tk window
+#	  center = (3.32, 121.3, 7.12)          # ppm, settable
+#	  pixel_size = (.02, .1, .01)           # ppm, settable
+#   region = ((3.22, 120.3, 6.12),
+#             (3.42, 122.3, 8.12))
+#   visible_depth = (.04, .2, .04)        # z-axis depth for peak display
+#   axis_order = (2, 0, 1)                # (x, y, z)
+#   positive_levels = <Contour_Levels>
+#   negative_levels = <Contour_Levels>
+#   scale_units = 'ppm'                   # ppm, hz, index
+#   show_ornaments = 1
+#   show_peaks = 1
+#   show_peakgroups = 1
+#   show_labels = 1
+#   show_lines = 1
+#   show_grids = 1
+#   subtract_fit_peaks = 0
+#   show_scales = 1
+#   show_nucleus_names = 0
+#   show_scrollbars = 1
+#   show_resonance_panels = 0
+#   filter_resonances = 0
+#   show_slices = 0
+#   slice_auto_scale = 0
+#   slice_subtract_peaks = 0
+#   show_peak_info = 0
+#   show_contour_scale = 0
+#   show_crosshair = 0
+#   show_crosshair_from_other_views = 0
+#   show_transpose_crosshair = 0
+#   pointer_position = (4.12, 122.2, 6.97)  # None if pointer not in view
+#
+#   destroy()                               # destroys window
+#   set_crosshair_position((4.12, 122.2, 6.97))
+#   got_focus()                             # update focus state after call
+#                       # tkutil.tk_call(self.session.tk, 'focus', v.frame)
+# -----------------------------------------------------------------------------
+#
+# class Contour_Levels:
+#
+#   lowest = -33000              # lowest contour level
+#   factor = 1.2                 # step factor between levels
+#   levels = 5                   # number of levels
+#   color = 'green'              # color of contours
+#
+# -----------------------------------------------------------------------------
+#
+#  Here are some additional members and functions from the spy module:
+#
+#  error = 'PokyError'
+#  user_poky_directory = '/home/woonghee_lee/Poky'
+#
+#  installation_path()            # Poky installation location
+#  object_exists(<Poky-object>)
+#
