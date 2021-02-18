@@ -32,7 +32,6 @@ uc = ng.fileiobase.uc_from_udic(udic)
 ax.plot(uc.ppm_scale(), data, 'k-')
 
 # decorate axes
-#ax.set_yticklabels([])
 ax.set_xlabel("Chemical Shift (ppm)")
 ax.set_ylabel("Amplitude")
 ax.set_title("Poky 1D Spectrum")
