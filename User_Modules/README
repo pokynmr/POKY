@@ -1,5 +1,7 @@
 
 You can use these scripts by drag'n drop into Poky Notepad (two-letter-code "Pn") and execute (File -> Run Python Module in Poky Notepad).
+Dropping into the non-text area of Poky Notepad will load the file. Simply copy-and-paste will do as well.
+
 Please watch: https://youtu.be/tGh4CmpJeXE
 
 We plan to include these scripts in the Poky package when major updates occur.
