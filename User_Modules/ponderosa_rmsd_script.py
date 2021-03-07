@@ -39,7 +39,7 @@ cmd.split_states('for_rmsd')
 # Backbone
 bb_rmsds = []
 for i in range(2, 21):
-  fit_result = cmd.align('for_rmsd_0001 & i. %s & n. N+CA+C' % (oreg), 
+  fit_result = cmd.align('for_rmsd_0001 & i. %s & n. N+CA+C+O' % (oreg), 
                         'for_rmsd_%04d' % (i), 
                         cutoff=0)
   bb_rmsds += [fit_result[0],]
