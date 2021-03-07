@@ -10,7 +10,7 @@
 import __main__
 s = __main__.main_session
 
-input_file = s.open_filedialog('Select a PDB file', 
+input_file = s.open_filedialog('Select a SAXS file', 
                     'SAXS (*.dat);; Any (*)', '')
 if input_file == '':
   raise SystemExit
