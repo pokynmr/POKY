@@ -71,3 +71,11 @@ for i in range(2, 21):
 print('--------------------------------------------')
 print('MEAN RMSD : %6.3f   %6.3f' % (bb_rmsd_mean, ha_rmsd_mean))
 print('STDEV RMSD: %6.3f   %6.3f' % (bb_rmsd_std, ha_rmsd_std))
+
+if s.show_message_yes_no('Save', 'Do you want to save the superimposed structure?'):
+  out_path = s.save_filedialog('Save as', 'PDB (*.pdb);; mmCIF (*.cif);; Any (*)', '')
+  if out_path == '':
+    raise SystemExit
+  cmd.intra_fit('for_rmsd & i. %s & n. N*+C*+O*+S*' % (oreg))
+  cmd.save(out_path, 'for_rmsd', state=0)
+  s.show_message('Finished', 'Finished.')
