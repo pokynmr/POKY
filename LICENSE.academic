@@ -1,6 +1,6 @@
 POKY license for academic institutions
 
-Copyright (c) 2020-present, Woonghee Lee
+Copyright (c) 2021-present, The Regents of The University of Colorado
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -13,6 +13,10 @@ modification, are permitted provided that the following conditions are met:
    this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
 
+3. Redistributions and uses must be recognized by Prof. Woonghee Lee. You must
+ publish your results in a public domain with a proper citation to this program
+  (e.g. journal articles, BioMagResBank, PDB).
+  
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
