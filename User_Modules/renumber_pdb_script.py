@@ -12,12 +12,12 @@ import __main__
 s = __main__.main_session
 
 input_file = s.open_filedialog('Select a PDB file', 
-                    'PDB (.pdb);; mmCIF (*.cif);; Any (*)', '')
+                    'PDB (*.pdb);; mmCIF (*.cif);; Any (*)', '')
 if input_file == '':
   raise SystemExit
 
 output_file = s.save_filedialog('Save as', 
-                    'PDB (.pdb);; mmCIF (*.cif);; Any (*)', '')
+                    'PDB (*.pdb);; mmCIF (*.cif);; Any (*)', '')
 
 offset = s.show_inputdialog('Offset', 'What is the offset?', '0')
 try:
