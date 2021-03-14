@@ -7,6 +7,8 @@
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
+import __main__
+s = __main__.main_session
 
 print('\n\n\n------------------------------------------------------')
 print('POKY T1/T2/TauC calculation')
@@ -14,12 +16,16 @@ print('by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)')
 print('Department of Chemistry, University of Colorado Denver')
 print('------------------------------------------------------')
 
+#################
 # User parameters
 plotT1 = True # if T1 plotting preferred
 plotT2 = True # if T2 plotting preferred
 plotMW = True # if approx. M.W. plotting preferred
 
 # Assignment needed for the first spectrum of each list
+
+# Two ways to set experiments.
+# 1. Set manually
 # set experiments for T1 (ms)
 T1_spec_list = [ # place spectrum names and (time) parameters. e.g.
             #['protein_0_1_T1',  0],
@@ -37,38 +43,21 @@ T2_spec_list = [ # place spectrum names and (time) parameters. e.g.
             #['protein_100_5_T2',  100],
             ]
 
-# for testing
-# set experiments for T1
-"""
-T1_spec_list = [ # place spectrum names and (time) parameters. e.g.
-            ['relaxT_0_1_N15-nanog_APO_T1',  0],
-            ['relaxT_20_2_N15-nanog_APO_T1',  20],
-            ['relaxT_50_3_N15-nanog_APO_T1',  50],
-            ['relaxT_100_4_N15-nanog_APO_T1',  100],
-            ['relaxT_200_5_N15-nanog_APO_T1',  200],
-            ['relaxT_300_6_N15-nanog_APO_T1',  300],
-            ['relaxT_400_7_N15-nanog_APO_T1',  400],
-            ['relaxT_500_8_N15-nanog_APO_T1',  500],
-            ['relaxT_600_9_N15-nanog_APO_T1',  600],
-            ['relaxT_800_10_N15-nanog_APO_T1',  800],
-            ['relaxT_1000_11_N15-nanog_APO_T1',  1000],
-            ['relaxT_1200_12_N15-nanog_APO_T1',  1200],
-            ]
-# set experiments for T2
-T2_spec_list = [ # place spectrum names and (time) parameters. e.g.
-            ['relaxT_10_1_N15_T2', 10],
-            ['relaxT_30_2_N15_T2', 30],
-            ['relaxT_50_3_N15_T2', 50],
-            ['relaxT_70_4_N15_T2', 70],
-            ['relaxT_90_5_N15_T2', 90],
-            ['relaxT_110_6_N15_T2', 110],
-            ['relaxT_130_7_N15_T2', 130],
-            ['relaxT_150_8_N15_T2', 150],
-            ['relaxT_170_9_N15_T2', 170],
-            ['relaxT_190_10_N15_T2', 190],
-            ['relaxT_210_11_N15_T2', 210],
-            ]
-"""
+# 2. Automatic setup- spectrum name must include the time parameter
+T1_names = s.show_spectrumselectiondialog('Select T1 spectra', 1)
+T2_names = s.show_spectrumselectiondialog('Select T2 spectra', 1)
+T1_list = T1_names.split('\t')
+T2_list = T2_names.split('\t')
+import re
+for specname in T1_list:
+  t = re.search('[0-9]+', specname)
+  T1_spec_list.append([specname, int(t.group(0))])
+T1_spec_list.sort(key = lambda x: x[1])
+for specname in T2_list:
+  t = re.search('[0-9]+', specname)
+  T2_spec_list.append([specname, int(t.group(0))])
+T2_spec_list.sort(key = lambda x: x[1])
+###############
 
 # calculate T1/T2
 def exp_func(x, a, b):
@@ -86,8 +75,6 @@ xdataT1 = np.array(list(map(lambda sp: sp[1], T1_spec_list)))
 xdataT2 = np.array(list(map(lambda sp: sp[1], T2_spec_list)))
 
 # get spectrum instances first
-import __main__
-s = __main__.main_session
 spT1_list = list(map(lambda sp: name_to_spectrum(sp[0], s), T1_spec_list))
 spT2_list = list(map(lambda sp: name_to_spectrum(sp[0], s), T2_spec_list))
 
@@ -101,7 +88,7 @@ if None in spT2_list:
   print('T2 experiment (' + none_name + ') does not exist in your spectrum list.')
   raise SystemExit
 
-# Calculation function defition
+# Calculation function definition
 def calcT(sp_list, xdata, t1t2):
   ref_peaks = spT1_list[0].peak_list()
   sorted_peaks = sort_peaks_by_assignment(ref_peaks, False)
