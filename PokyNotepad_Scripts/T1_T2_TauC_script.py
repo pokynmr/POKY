@@ -1,6 +1,7 @@
 #
 # This is an example script to calculate T1/T2/TauC from relaxation data.
 # Also approximate M.W. from TauC for a rigid protein.
+#
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
 # To run this script:
@@ -21,6 +22,8 @@ print('------------------------------------------------------')
 plotT1 = True # if T1 plotting preferred
 plotT2 = True # if T2 plotting preferred
 plotMW = True # if approx. M.W. plotting preferred
+minH = 8.5    # H ppm higher than this value will be considered for TauC      
+maxSTD = 150  # T deviation less than this will be considered for TauC
 
 # Assignment needed for the first spectrum of each list
 
@@ -92,7 +95,7 @@ if None in spT2_list:
 def calcT(sp_list, xdata, t1t2):
   ref_peaks = spT1_list[0].peak_list()
   sorted_peaks = sort_peaks_by_assignment(ref_peaks, False)
-  fit_result_list = []
+  fit_result_list, tc_used_list = [], []
   for ref_peak in sorted_peaks:
     pos = ref_peak.position
 
@@ -106,10 +109,13 @@ def calcT(sp_list, xdata, t1t2):
                           bounds=([max(ydata), 0], [10*max(ydata), 10000]))
     point_sd = list(np.sqrt(np.diag(pcov)))
     fit_result_list.append([nres, popt[1], point_sd[1], ref_peak.assignment])
-
+    if min(pos) > minH and point_sd[1] < maxSTD:
+      tc_used_list.append(popt[1])
+    
   # print out results
   print(t1t2 + ' Relaxation Results')
-  print('%-5s %-12s %-12s %-16s' % ('SeqID', t1t2 + ' decay', 'Deviation', 'Assignment') )
+  print('%-5s %-12s %-12s %-16s' % \
+    ('SeqID', t1t2 + ' decay', 'Deviation', 'Assignment') )
   for fr in fit_result_list:
     line = '%-5d %-12.3f %-12.3f %-16s' % (fr[0], fr[1], fr[2], fr[3])
     print(line)
@@ -117,7 +123,8 @@ def calcT(sp_list, xdata, t1t2):
   xdata2 = np.array(list(map(lambda y: y[0], fit_result_list)))
   ydata = np.array(list(map(lambda y: y[1], fit_result_list)))
   ysddata = np.array(list(map(lambda y: y[2], fit_result_list)))
-  return xdata2, ydata, ysddata, np.average(ydata), np.std(ydata)
+  return xdata2, ydata, ysddata, np.average(ydata), np.std(ydata), \
+                    np.average(tc_used_list), np.std(tc_used_list)
 
 # Plotting function definition
 def plotT(x, y, y2, t1t2):
@@ -135,12 +142,12 @@ def plotT(x, y, y2, t1t2):
 
 ####
 # calculate T1 and plot if requested
-x, y, y2, T1avg, T1std = calcT(spT1_list, xdataT1, 'T1')
+x, y, y2, T1avg, T1std, T1avg2, T1std2 = calcT(spT1_list, xdataT1, 'T1')
 if plotT1:
   plotT(x, y, y2, 'T1')
 
 # calculate T2 and plot if requested
-x, y, y2, T2avg, T2std = calcT(spT2_list, xdataT2, 'T2')
+x, y, y2, T2avg, T2std, T2avg2, T2std2 = calcT(spT2_list, xdataT2, 'T2')
 if plotT2:
   plotT(x, y, y2, 'T2')
 
@@ -152,12 +159,17 @@ if plotT2:
 
 # Tc (ns) = 1 / (4*pi*Nresonance_freq) * (6*T1/T2 - 7)**.5 * 1000
 # This means, when TauC is determined, MW can be predicted.
+
 nucidx = spT1_list[0].nuclei.index('15N')
 Nfreq = spT1_list[0].hz_per_ppm[nucidx]
-TauC = 1 / (4 * 3.141592653589793238 * Nfreq) * (6 * T1avg/T2avg - 7) ** 0.5 * 1000
+TauC = 1 / (4 * 3.141592653589793238 * Nfreq) * \
+        (6 * T1avg2/T2avg2 - 7) ** 0.5 * 1000
 MW = (TauC - 0.472) / 0.58
-print('T1 average: %.3f (+/-%.3f)' % (T1avg, T1std))
-print('T2 average: %.3f (+/-%.3f)' % (T2avg, T2std))
+print('T1 average (all): %.3f (+/-%.3f)' % (T1avg, T1std))
+print('T2 average (all): %.3f (+/-%.3f)' % (T2avg, T2std))
+print('T1 average (>%.1fppm): %.3f (+/-%.3f)' % (minH, T1avg2, T1std2))
+print('T2 average (>%.1fppm): %.3f (+/-%.3f)' % (minH, T2avg2, T2std2))
+
 print('Nitrogen resonance: %f.3f' % (Nfreq))
 print('TauC (ns): %f' % (TauC))
 print('Approx. M.W. (kDa): %f' % (MW))
