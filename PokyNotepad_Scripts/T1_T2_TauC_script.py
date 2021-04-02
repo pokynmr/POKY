@@ -24,6 +24,9 @@ plotT2 = True # if T2 plotting preferred
 plotMW = True # if approx. M.W. plotting preferred
 minH = 8.5    # H ppm higher than this value will be considered for TauC      
 maxSTD = 150  # T deviation less than this will be considered for TauC
+excl_residues = [] # Exclude residues for TauC calculation.
+                  # This can be like this, too.
+                  # list(range(1, 10)) + list(range(60, 70))
 
 # Assignment needed for the first spectrum of each list
 
@@ -109,7 +112,7 @@ def calcT(sp_list, xdata, t1t2):
                           bounds=([max(ydata), 0], [10*max(ydata), 10000]))
     point_sd = list(np.sqrt(np.diag(pcov)))
     fit_result_list.append([nres, popt[1], point_sd[1], ref_peak.assignment])
-    if min(pos) > minH and point_sd[1] < maxSTD:
+    if min(pos) > minH and point_sd[1] < maxSTD and nres not in excl_residues:
       tc_used_list.append(popt[1])
     
   # print out results
@@ -137,6 +140,7 @@ def plotT(x, y, y2, t1t2):
   plt.xlabel(xlabel)
   plt.ylabel(ylabel)
   plt.title(title)
+  plt.ylim([0, max(y+y2) * 1.1])
   plt.pause(0.1)
   plt.show(block=False)
 
