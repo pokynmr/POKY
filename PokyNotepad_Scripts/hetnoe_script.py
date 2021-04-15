@@ -20,7 +20,7 @@ proj = s.project
 ref_spec_name = s.show_spectrumselectiondialog('Reference spectrum', 0).strip()
 noe_spec_name = s.show_spectrumselectiondialog('NOE spectrum', 0).strip()
 only_selected = False # Use all assigned peaks if False
-error_bar = False # Draw error bar if True
+error_bar = True # Draw error bar if True
 
 # Processing start
 from sputil import name_to_spectrum, sort_peaks_by_assignment
@@ -54,20 +54,19 @@ noe_height = np.array(list(map(lambda x: noe_spec.data_height(x.position),
 ydata = np.array(list(map(lambda x: noe_height[x] / ref_height[x],
                                         range(len(peaks)))))
 # error estimation
-# pick 30 random position
-#if error_bar:
-ref_rand, noe_rand = [], []
-for i in range(30):
-  randx=np.random.randint(0, ref_spec.data_size[0])
-  randy=np.random.randint(0, ref_spec.data_size[1])
-  ref_rand.append(ref_spec.data_height((randx, randy)))
-  noe_rand.append(noe_spec.data_height((randx, randy)))
-rho_ref = np.std(ref_rand)
-rho_noe = np.std(noe_rand)
-
+## pick 30 random position
+##if error_bar:
+#ref_rand, noe_rand = [], []
+#for i in range(30):
+#  randx=np.random.randint(0, ref_spec.data_size[0])
+#  randy=np.random.randint(0, ref_spec.data_size[1])
+#  ref_rand.append(ref_spec.data_height((randx, randy)))
+#  noe_rand.append(noe_spec.data_height((randx, randy)))
+rho_ref = ref_spec.noise
+rho_noe = noe_spec.noise
+# https://pubs.acs.org/doi/pdf/10.1021/bi00185a040
 edata = np.array(list(map(lambda x: ((rho_ref/ref_height[x])**2 +
         (rho_noe/noe_height[x])**2)**.5, range(len(xdata)))))
-#edata = np.array([(rho_ref**2 + rho_noe**2)**.5] * len(xdata))
 
 # plotting
 from matplotlib import use as matplotlib_use
