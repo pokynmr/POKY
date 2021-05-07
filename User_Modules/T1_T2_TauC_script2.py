@@ -158,8 +158,8 @@ T2all_dict = {x[0]:x[1:] for x in T2all}
 nucidx = spT1_list[0].nuclei.index('15N')
 Nfreq = spT1_list[0].hz_per_ppm[nucidx]
 
-nres1 = T1all[0][0]
-nres2 = T1all[-1][0]
+nres1 = min([x[0] for x in T1all])
+nres2 = max([x[0] for x in T1all])
 
 print('\n* TauC/MW Results')
 print('%-5s %-12s %-12s' % ('SeqID', 'TauC (ns)', 'M.W. (kDa)') )
