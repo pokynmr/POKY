@@ -1,5 +1,5 @@
 #
-# This is an example script for concatenate two spectra.
+# This is an example script for concatenating two spectra.
 # Two spectra should share the same ni, spectral width, etc.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
