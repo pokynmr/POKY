@@ -52,6 +52,6 @@ data3 = np.array(data) + factor*np.array(data2)
 
 ng.sparky.write_lowmem(new_path, dic, data3, overwrite=True)
 
-if s.show_message_yes_no('Load data', 'Do you want to load the processed spectrum?'):
+if s.show_message_yes_no('Load data', 'Do you want to load the concatenated spectrum?'):
   s.open_spectrum(new_path)
 
