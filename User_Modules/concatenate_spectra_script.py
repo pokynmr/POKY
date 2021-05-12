@@ -13,7 +13,6 @@
 
 import numpy as np
 import nmrglue as ng
-from skimage.restoration import denoise_wavelet
 from sputil import name_to_spectrum
 # POKY libraries
 import __main__
