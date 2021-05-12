@@ -14,15 +14,16 @@
 import numpy as np
 import nmrglue as ng
 from sputil import name_to_spectrum
+
 # POKY libraries
 import __main__
 s = __main__.main_session
+
 specname = s.show_spectrumselectiondialog('Select spectrum one', 0)
 sp = name_to_spectrum(specname, s)
 
 if sp == None:
   raise SystemError
-
 
 specname2 = s.show_spectrumselectiondialog('Select spectrum two', 0)
 sp2 = name_to_spectrum(specname2, s)
