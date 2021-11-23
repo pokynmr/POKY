@@ -19,28 +19,27 @@ print('by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)')
 print('Department of Chemistry, University of Colorado Denver')
 print('------------------------------------------------------')
 
-# User parameter
-
-# Choose either the ucsf path or spectrum name
-#ucsfpath = '/path/to/your/spectrum.ucsf'
-specname = 'your_spectrum_name'
-
-# In case, if you wish to convert multiple files
-# pipepath will be always considered "None"
-#specnames = ['specname 1',
-#             'specname 2',
-#             'specname 3']
-
-# Choose either the pipe path to write or None for writing in the same
-# directory with .pipe extension
-#pipepath = '/path/to/your/spectrum.pipe'
-pipepath = None
-
-# Processing start
 from sputil import name_to_spectrum
 import __main__
 s = __main__.main_session
 
+# User parameter
+# Choose either the ucsf path or spectrum name
+#ucsfpath = s.open_filedialog('Select a spectrum', 'Any (*);; UCSF (*.ucsf)', '')
+specname = s.show_spectrumselectiondialog('Select a spectrum', 0)
+
+# In case, if you wish to convert multiple files
+# pipepath will be always considered "None"
+#specs = s.show_spectrumselectiondialog('Select spectra', 1)
+#specnames = specs.split('\t')
+
+# Choose either the pipe path to write or None for writing in the same
+# directory with .pipe extension
+#pipepath = '/path/to/your/spectrum.pipe'
+#pipepath = None
+pipepath = s.save_filedialog('New pipe path', 'Any (*);; PIPE (*.pipe)', '')
+
+# Processing start
 try:
   getattr("specnames")
   pipepath = None
