@@ -58,5 +58,36 @@
     "author" : "Arantes P.R.",
     "image" : "",
     "update_date" : "2021-10-29"
+    },
+"6":
+    {
+    "name" : "RoseTTAFold",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/RoseTTAFold.ipynb",
+    "description" : "RoseTTAFold: Accurate prediction of protein structures and interactions using a three-track neural network.",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "Minkyung et al.",
+    "image" : "",
+    "update_date" : "2022-01-05"
+    },
+"7":
+    {
+    "name" : "AlphaFold complexes",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_complexes.ipynb",
+    "description" : "The functionality for complex prediction (including going beyond dimers)",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "Minkyung Baek and Yoshitaka Moriwaki",
+    "image" : "",
+    "update_date" : "2022-01-05"
+    },
+"8":
+    {
+    "name" : "Molecular Dynamics using Gromacs",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/giribio_MD_Cloud_gmx.ipynb",
+    "description" : "MD Protein Simulation at 10ns using Gromacs 2021 GPU",
+    "source" : "https://www.youtube.com/watch?v=DP_bPqnybU8",
+    "author" : "Girinath G Pillai",
+    "image" : "",
+    "update_date" : "2022-01-05"
     }
+    
 }
