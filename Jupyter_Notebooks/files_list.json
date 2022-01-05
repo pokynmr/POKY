@@ -61,6 +61,16 @@
     },
 "6":
     {
+    "name" : "Molecular Dynamics using Gromacs",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/giribio_MD_Cloud_gmx.ipynb",
+    "description" : "MD Protein Simulation at 10ns using Gromacs 2021 GPU",
+    "source" : "https://www.youtube.com/watch?v=DP_bPqnybU8",
+    "author" : "Girinath G Pillai",
+    "image" : "",
+    "update_date" : "2022-01-05"
+    },
+"7":
+    {
     "name" : "RoseTTAFold",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/RoseTTAFold.ipynb",
     "description" : "RoseTTAFold: Accurate prediction of protein structures and interactions using a three-track neural network.",
@@ -69,7 +79,7 @@
     "image" : "",
     "update_date" : "2022-01-05"
     },
-"7":
+"8":
     {
     "name" : "AlphaFold complexes",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_complexes.ipynb",
@@ -79,15 +89,34 @@
     "image" : "",
     "update_date" : "2022-01-05"
     },
-"8":
+"9":
     {
-    "name" : "Molecular Dynamics using Gromacs",
-    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/giribio_MD_Cloud_gmx.ipynb",
-    "description" : "MD Protein Simulation at 10ns using Gromacs 2021 GPU",
-    "source" : "https://www.youtube.com/watch?v=DP_bPqnybU8",
-    "author" : "Girinath G Pillai",
+    "name" : "AlphaFold2 mmseqs2",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_mmseqs2.ipynb",
+    "description" : "Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer.",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "Mirdita et al.",
+    "image" : "",
+    "update_date" : "2022-01-05"
+    },
+"10":
+    {
+    "name" : "AlphaFold2 batch",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_batch.ipynb",
+    "description" : "Easy to use AlphaFold2 protein structure (Jumper et al. 2021) and complex (Evans et al. 2021) prediction using multiple sequence alignments generated through MMseqs2.",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "Mirdita et al.",
+    "image" : "",
+    "update_date" : "2022-01-05"
+    },
+"11":
+    {
+    "name" : "AlphaFold2 advanced",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_advanced.ipynb",
+    "description" : "This notebook modifies deepmind's original notebook (before AlphaFold-Multimer existed) to add experimental support for modeling complexes (both homo and hetero-oligomers), option to run MMseqs2 instead of Jackhmmer for MSA generation and advanced functionality.",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "Mirdita et al.",
     "image" : "",
     "update_date" : "2022-01-05"
     }
-    
 }
