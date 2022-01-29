@@ -99,6 +99,9 @@ def calcR(sp_list, xdata, r1r2):
     nres = ref_peak.resonances()[0].group.number
     # peak intensities
     ydata = np.array(list(map(lambda sp: sp.data_height(pos), sp_list)))
+    while np.mean(ydata) > 10**11:
+      ydata = ydata ** .5
+      
     # fitting
     popt, pcov = curve_fit(exp_func, xdata, ydata)
     point_sd = list(np.sqrt(np.diag(pcov)))
