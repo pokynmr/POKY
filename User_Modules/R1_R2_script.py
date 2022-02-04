@@ -103,7 +103,7 @@ def calcR(sp_list, xdata, r1r2):
       ydata = ydata ** .5
       
     # fitting
-    popt, pcov = curve_fit(exp_func, xdata, ydata)
+    popt, pcov = curve_fit(exp_func, xdata, ydata, maxfev=1000000000)
     point_sd = list(np.sqrt(np.diag(pcov)))
     fit_result_list.append([nres, popt[1], point_sd[1], ref_peak.assignment])
     
