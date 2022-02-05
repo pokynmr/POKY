@@ -24,7 +24,7 @@ print('------------------------------------------------------')
 
 #################
 # User parameters
-plotK = True  # if R1 plotting preferred
+plotK = True  # if Kex plotting preferred
 minErr = 30   # minimum deviation requirement for plotting
 
 # Assignment needed for the first spectrum of each list
