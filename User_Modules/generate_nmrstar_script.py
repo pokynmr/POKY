@@ -113,9 +113,12 @@ def GenerateNmrStar(session, path, cond_list=None, unused_resonance=1):
   for condition in session.project.condition_list():
     if cond_list != None:
       if not condition.name in cond_list:
+        print('Skipped condition: ' + condition.name)
         continue
     for resonance in condition.resonance_list():
       if resonance.peak_count == 0 and unused_resonance == 0:
+        print('Skipped resonance: ' + resonance.group + \
+              ' in condition ' + condition.name)
         continue
       if bt == 'p':
         aaa = myseq.a2aaa(resonance.group.symbol)
