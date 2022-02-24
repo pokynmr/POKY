@@ -22,7 +22,8 @@ selected_cond_names = s.show_conditionselectiondialog(
 selected_cond_list = selected_cond_names.split('\t')
 if len(selected_cond_list) == 0:
     raise SystemExit
-
+print(selected_cond_list)
+    
 # Ask inclusion of unused resonances
 unused_resonance = s.show_message_yes_no('Unused resonances', 
     'Do you want to include unused resonances?')
