@@ -19,9 +19,13 @@ print('------------------------------------------------------')
 # Select condition
 selected_cond_names = s.show_conditionselectiondialog(
                     'Conditions to export', 1)
-selected_cond_list = selected_cond_names.split('\t')
-if len(selected_cond_list) == 0:
-    raise SystemExit
+molcond_list = selected_cond_names.split('\t')
+if selected_cond_names == '':
+  molcond_list = ['']
+selected_cond_list = []
+for mc in molcond_list:
+  selected_cond_list.append(mc.split(' / ')[-1])
+  
 print(selected_cond_list)
     
 # Ask inclusion of unused resonances
@@ -31,7 +35,7 @@ unused_resonance = s.show_message_yes_no('Unused resonances',
 # Ask path
 str_path = s.save_filedialog('Save as...', 'Any (*);; NMR-STAR 3.1 (*.str)', '')
 if str_path == '':
-    raise SystemExit
+  raise SystemExit
 
 # -----------------------------------------------------------------------------
 #
