@@ -69,7 +69,7 @@ for resn in c.resonance_list():
       dcs = cs - row[idx]
       row2 = refCSdict[resn.group.symbol + 'o']
       dcs2 = cs - row2[idx]
-      if dcs2 < dcs: 
+      if abs(dcs2) < abs(dcs): 
         dcs = dcs2
   except:
     continue
