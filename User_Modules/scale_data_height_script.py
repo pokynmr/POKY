@@ -35,9 +35,7 @@ try:
 except:
   s.show_message('Error', 'Value must be numeric.')
   raise SystemError
-
-proj = s.project
-
+  
 dic, data = ng.sparky.read_lowmem(sp.data_path)
 new_data = np.multiply(data, factor)
 
