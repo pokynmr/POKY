@@ -12,7 +12,6 @@
 #
 
 import numpy as np
-import nmrglue as ng
 from sputil import name_to_spectrum
 # POKY libraries
 import __main__
@@ -35,11 +34,20 @@ try:
 except:
   s.show_message('Error', 'Value must be numeric.')
   raise SystemError
-  
-dic, data = ng.sparky.read_lowmem(sp.data_path)
-new_data = np.multiply(data, factor)
 
-ng.sparky.write_lowmem(new_path, dic, new_data, overwrite=True)
+#### THIS IS UCSFTOOL VERSION
+import ucsftool3
+ut = ucsftool3.ucsfTool()
+ut.ucsf_open(sp.data_path)
+ut.write_transform(new_path, 'mult', factor, 0, overwrite=1)
+ut.ucsf_close()
+
+#### THIS IS NMRGLUE VERSION
+# IT DOES NOT WORK WITH SOME FILES. SO WE SWITCHED TO UCSFTOOL
+#import nmrglue as ng
+#dic, data = ng.sparky.read_lowmem(sp.data_path)
+#new_data = np.multiply(data, factor)
+#ng.sparky.write_lowmem(new_path, dic, new_data, overwrite=True)
 
 if s.show_message_yes_no('Load data', 'Do you want to load the processed spectrum?'):
   s.open_spectrum(new_path)
