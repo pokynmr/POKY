@@ -3,12 +3,13 @@
 # selected spectrum in the project.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: April 13, 2022
+# Last update: April 17, 2022
 #
 # To run this script:
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
+# POKY 01/14/22e or higher is required to run this script.
 #
 
 import numpy as np
