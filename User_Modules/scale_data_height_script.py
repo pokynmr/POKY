@@ -3,7 +3,7 @@
 # selected spectrum in the project.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: April 17, 2022
+# Last update: April 20, 2022
 #
 # To run this script:
 #   In Poky Notepad,
