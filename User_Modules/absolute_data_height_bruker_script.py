@@ -13,7 +13,6 @@
 #
 
 import numpy as np
-from sputil import name_to_spectrum
 # POKY libraries
 import __main__
 s = __main__.main_session
