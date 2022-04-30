@@ -7,7 +7,7 @@
 # Make sure you have saved all the data before using this.
 #
 # Modified from the "wavelet denoising" script by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Developed by by Mehdi Rahimi, Ph.D. (mehdi.rahimi@ucdenver.edu)
+# Developed by Mehdi Rahimi, Ph.D. (mehdi.rahimi@ucdenver.edu)
 #
 # Last update: February 19, 2021 
 #
