@@ -37,7 +37,7 @@ if len(s.selected_peaks()) != 1:
 ref_peak = s.selected_peaks()[0]
 ref_spec = ref_peak.spectrum
 
-specnames = s.show_spectrumselectiondialog('Select a spectrum', 1)
+specnames = s.show_spectrumselectiondialog('Select multiple spectra', 1)
 specname_list = specnames.split('\t')
 if len(specname_list) < 3:
   print('Select multiple spectra. Abort.')
