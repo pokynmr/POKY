@@ -7,7 +7,6 @@
 # To run this script:
 #   In Poky Notepad,
 #     File -> Run Python Module
-# WARNING: It can take long time depending on your data!
 #
 #
 
@@ -84,7 +83,6 @@ for peak_and_data in data_list[1:]:
   print('Peak %.3f, %.3f: R corrcoef %.3f- %s' % \
     (peak.frequency[0], peak.frequency[1], R[0][1], state))
     
-
 print('------------------------------------------------------')  
 cplbl = s.show_inputdialog('Label','Label selected.','Compound 1')
 if cplbl != '':
