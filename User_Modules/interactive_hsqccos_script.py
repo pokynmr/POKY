@@ -8,6 +8,13 @@
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
+# HSQCcos method citation:
+# Rudd TR, Macchi E, Muzi L, Ferro M, Gaudesi D, Torri G, Casu B, 
+# Guerrini M, Yates EA. 
+# Unravelling Structural Information from Complex Mixtures Utilizing 
+# Correlation Spectroscopy Applied to HSQC Spectra. 
+# Anal Chem. 2013 Aug 6;85(15):7487–7493. 
+# https://doi.org/10.1021/ac4014379
 #
 
 # POKY libraries
