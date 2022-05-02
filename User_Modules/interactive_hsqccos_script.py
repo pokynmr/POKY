@@ -82,7 +82,7 @@ ref_peak, ref_data = data_list[0]
 for peak_and_data in data_list[1:]:
   peak, data = peak_and_data
   R = np.corrcoef(ref_data, data)
-  if R[0][1] >= Rcutoff:
+  if abs(R[0][1]) >= Rcutoff:
     peak.selected = 1
     state = 'selected'
   else:
