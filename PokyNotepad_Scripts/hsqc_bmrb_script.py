@@ -40,8 +40,8 @@ offset1 = float(szoffset1)
 offset2 = float(szoffset2)
 
 
-# BMRB SPARKY file is H-N. Check if flipping is necessary.
-if sp.nuclei == ('15N', '1H'):
+# BMRB SPARKY file is N-H. Check if flipping is necessary.
+if sp.nuclei == ('1H', '15N'):
   flip = True
 else:
   flip = False
