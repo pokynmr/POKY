@@ -65,24 +65,27 @@ if len(s.selected_peaks()) > 2:
   sp_list.remove(s.selected_peaks()[0].spectrum)
   sp_list = [s.selected_peaks()[0].spectrum,] + sp_list  
 
-def preprocess(data1d):
-  # mean center
-  avg = np.average(data1d)
-  mc_data = np.subtract(data1d, avg)
-  
-  # standard
-  mmax, mmin = np.max(mc_data), np.min(mc_data)
-  mc_data = np.divide(mc_data, (mmax - mmin))
-
-  # apply scale
-  std = np.std(mc_data)
-  if scale_method == 0: # pareto
-    data1d = np.divide(mc_data, np.sqrt(std))
-  elif scale_method == 1: # unit
-    data1d = np.divide(mc_data, std)
-  else: # raw
-    data1d = mc_data
-  return data1d
+def preprocess(data):
+  for i in range(len(data[0])):
+    # mean center
+    avg = np.average(data[:,i])
+    mc_data = np.subtract(data[:,i], avg)
+    
+    # standard
+    std = np.std(mc_data)
+    mmax, mmin = np.max(mc_data), np.min(mc_data)
+    mc_data = np.divide(mc_data, (mmax - mmin))
+    if std == 0:
+      continue
+    # apply scale
+    if scale_method == 0: # pareto
+      data1d = np.divide(mc_data, np.sqrt(std))
+    elif scale_method == 1: # unit
+      data1d = np.divide(mc_data, std)
+    else: # raw
+      data1d = mc_data
+    data[:,i] = data1d
+  return data
 
 res_list = []
 for i in range(len(sp_list)):
@@ -142,15 +145,17 @@ if CombineNuclei:
       dist.append(((refc1-c1)**2 + (refc2-c2)**2)**.5)
     res_dict[res] = dist # re-assign with distances
 
-# preprocess
 for i in range(len(keys)):
   res = keys[i]
-  scaled = preprocess(res_dict[res])
+  #scaled = preprocess(res_dict[res])
   #res_dict[res] = scaled
   if i == 0:
-    data_stack = scaled
+    data_stack = np.array(res_dict[res]) #scaled
   else:
-    data_stack = np.vstack((data_stack, scaled))  
+    data_stack = np.vstack((data_stack, np.array(res_dict[res])))# scaled))  
+
+# preprocess
+data_stack = preprocess(data_stack)
 
 pca = PCA(n_components=2)
 converted_data = pca.fit_transform(data_stack)
