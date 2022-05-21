@@ -3,12 +3,13 @@
 #
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
-# Last Update: May 17, 2022 
+# Last Update: May 21, 2022 
 #
 # To run this script:
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
+# Warning! This can be very slow!
 #
 import __main__
 s = __main__.main_session
@@ -61,37 +62,39 @@ scale_method = s.show_selectionexdialog('Scaler', 'Scale method: ',
                           ('Pareto', 'Unit', 'Raw'))
 
 def preprocess(data):
-  # 2D -> 1D
-  data1d = np.array(data).flatten()
+  for i in range(len(data[0])):
+    # mean center
+    avg = np.average(data[:,i])
+    mc_data = np.subtract(data[:,i], avg)
   
-  # mean center
-  avg = np.average(data1d)
-  mc_data = np.subtract(data1d, avg)
+    # standard
+    mmax, mmin = np.max(mc_data), np.min(mc_data)
+    mc_data = np.divide(mc_data, (mmax - mmin))
   
-  # standard
-  mmax, mmin = np.max(mc_data), np.min(mc_data)
-  mc_data = np.divide(mc_data, (mmax - mmin))
-  
-  # apply scale
-  std = np.std(mc_data)
-  if scale_method == 0: # pareto
-    data1d = np.divide(mc_data, np.sqrt(std))
-  elif scale_method == 1: # unit
-    data1d = np.divide(mc_data, std)
-  else: # raw
-    data1d = mc_data
-    
-  return data1d
+    # apply scale
+    std = np.std(mc_data)
+    if std == 0:
+      continue
+    if scale_method == 0: # pareto
+      data1d = np.divide(mc_data, np.sqrt(std))
+    elif scale_method == 1: # unit
+      data1d = np.divide(mc_data, std)
+    else: # raw
+      data1d = mc_data
+    data[:,i] = data1d
+  return data
 
-dic, data = ng.sparky.read_lowmem(sp_list[0].data_path)
-data1d = preprocess(data)
-
-data_stack = data1d
-for i in range(1, len(sp_list)):
+for i in range(0, len(sp_list)):
   sp = sp_list[i]
   dic, data = ng.sparky.read_lowmem(sp.data_path)
-  data1d = preprocess(data)
-  data_stack = np.vstack((data_stack, data1d))
+  if i == 0:
+    data_stack = np.array(data).flatten()
+    print(data_stack.shape)
+  else:
+    print(np.array(data).flatten().shape)
+    data_stack = np.vstack((data_stack, np.array(data).flatten()))
+
+data_stack = preprocess(data_stack)
 
 pca = PCA(n_components=2)
 converted_data = pca.fit_transform(data_stack)
