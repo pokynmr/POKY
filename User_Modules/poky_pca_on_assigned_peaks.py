@@ -74,7 +74,6 @@ for i in range(len(sp_list)):
     scale[sp.nuclei.index('13C')] = CtoH
   if i == 1:
     res_dict = dict(res_list)
-    print(res_dict)
   for p in pl:
     if p.is_assigned != 1:
       continue
