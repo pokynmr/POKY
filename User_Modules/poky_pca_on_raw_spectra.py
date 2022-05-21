@@ -57,7 +57,7 @@ if None in sp_list:
   print('Experiment (' + none_name + ') does not exist in your spectrum list.')
   raise SystemExit
 
-def preprocess(raw_data2d):
+def preprocess(data):
   # 2D -> 1D
   data1d = np.array(data).flatten()
   # mean center
