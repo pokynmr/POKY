@@ -9,7 +9,10 @@
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
+# Only selected peaks will be considered if there are any.
+# If there aren't all peaks will be considered.
 #
+
 import __main__
 s = __main__.main_session
 
@@ -53,6 +56,12 @@ if None in sp_list:
   print('Experiment (' + none_name + ') does not exist in your spectrum list.')
   raise SystemExit
 
+# If there are some selected peaks, we only used them.
+# To do so, we will put the spectrum to the reference level (0)
+if len(s.selected_peaks()) > 2:
+  sp_list.remove(s.selected_peaks()[0].spectrum)
+  sp_list = [s.selected_peaks()[0].spectrum,] + sp_list  
+
 def preprocess(data1d):
   # mean center
   avg = np.average(data1d)
@@ -77,6 +86,8 @@ for i in range(len(sp_list)):
   for p in pl:
     if p.is_assigned != 1:
       continue
+    if len(s.selected_peaks()) > 2 and i == 0 and p.selected == 0:
+      continue
     # not assigned in all spectra definitely.
     if p.resonances()[0].peak_count < len(sp_list):
       continue
@@ -85,19 +96,25 @@ for i in range(len(sp_list)):
     asgn = parse_assignment(p.assignment)
     if asgn == None:
       continue
-
+    
     if CombineNuclei:
       if i == 0: # make dictionary
         res_list.append([asgn[0][0], [[p.frequency[0] * scale[0], p.frequency[1] * scale[1]],]])
       else:
-        res_dict[asgn[0][0]].append([p.frequency[0] * scale[0], p.frequency[1] * scale[1]])
+        try:
+          res_dict[asgn[0][0]].append([p.frequency[0] * scale[0], p.frequency[1] * scale[1]])
+        except:
+          continue
     else:  
       if i == 0: # make dictionary
         res_list.append([''.join(asgn[0]), [p.frequency[0] * scale[0],]])
         res_list.append([''.join(asgn[1]), [p.frequency[1] * scale[1],]])
       else:
-        res_dict[''.join(asgn[0])].append(p.frequency[0] * scale[0])
-        res_dict[''.join(asgn[1])].append(p.frequency[1] * scale[1])
+        try:
+          res_dict[''.join(asgn[0])].append(p.frequency[0] * scale[0])
+          res_dict[''.join(asgn[1])].append(p.frequency[1] * scale[1])
+        except:
+          continue
 
 keys = list(res_dict.keys())
 
