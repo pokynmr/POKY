@@ -56,6 +56,9 @@ if None in sp_list:
   print('Experiment (' + none_name + ') does not exist in your spectrum list.')
   raise SystemExit
 
+scale_method = s.show_selectionexdialog('Scaler', 'Scale method: ', 
+                                ('Pareto', 'Unit', 'Raw'))
+
 # If there are some selected peaks, we only used them.
 # To do so, we will put the spectrum to the reference level (0)
 if len(s.selected_peaks()) > 2:
@@ -66,10 +69,19 @@ def preprocess(data1d):
   # mean center
   avg = np.average(data1d)
   mc_data = np.subtract(data1d, avg)
+  
+  # standard
+  mmax, mmin = np.max(mc_data), np.min(mc_data)
+  mc_data = np.divide(mc_data, (mmax - mmin))
 
-  # pareto scale
+  # apply scale
   std = np.std(mc_data)
-  data1d = np.divide(mc_data, np.sqrt(std))
+  if scale_method == 0: # pareto
+    data1d = np.divide(mc_data, np.sqrt(std))
+  elif scale_method == 1: # unit
+    data1d = np.divide(mc_data, std)
+  else: # raw
+    data1d = mc_data
   return data1d
 
 res_list = []
