@@ -60,54 +60,27 @@ if None in sp_list:
 
 scale_method = s.show_selectionexdialog('Scaler', 'Scale method: ', 
                           ('Pareto', 'Unit', 'Raw'))
-scale_axis = 0
-if scale_method != 2:
-  scale_axis = s.show_selectionexdialog('Scaler', 'Scale over: ', 
-                          ('Spectrum', 'Data Point'))
-
 
 def preprocess(data):
-  if scale_axis == 0:
-    for i in range(len(data)):
-      # mean center
-      avg = np.average(data[i])
-      mc_data = np.subtract(data[i], avg)
+  for i in range(len(data[0])):
+    # mean center
+    avg = np.average(data[:,i])
+    mc_data = np.subtract(data[:,i], avg)
     
-      # standard
-      mmax, mmin = np.max(mc_data), np.min(mc_data)
-      mc_data = np.divide(mc_data, (mmax - mmin))
-    
-      # apply scale
-      std = np.std(mc_data)
-      if std == 0:
-        continue
-      if scale_method == 0: # pareto
-        data1d = np.divide(mc_data, np.sqrt(std))
-      elif scale_method == 1: # unit
-        data1d = np.divide(mc_data, std)
-      else: # raw
-        data1d = mc_data
-      data[i] = data1d
-  else:
-    for i in range(len(data[0])):
-      # mean center
-      avg = np.average(data[:,i])
-      mc_data = np.subtract(data[:,i], avg)
-      
-      # standard
-      std = np.std(mc_data)
-      mmax, mmin = np.max(mc_data), np.min(mc_data)
-      mc_data = np.divide(mc_data, (mmax - mmin))
-      if std == 0:
-        continue
-      # apply scale
-      if scale_method == 0: # pareto
-        data1d = np.divide(mc_data, np.sqrt(std))
-      elif scale_method == 1: # unit
-        data1d = np.divide(mc_data, std)
-      else: # raw
-        data1d = mc_data
-      data[:,i] = data1d
+    # standard
+    std = np.std(mc_data)
+    mmax, mmin = np.max(mc_data), np.min(mc_data)
+    mc_data = np.divide(mc_data, (mmax - mmin))
+    if std == 0:
+      continue
+    # apply scale
+    if scale_method == 0: # pareto
+      data1d = np.divide(mc_data, np.sqrt(std))
+    elif scale_method == 1: # unit
+      data1d = np.divide(mc_data, std)
+    else: # raw
+      data1d = mc_data
+    data[:,i] = data1d
   return data
 
 for i in range(0, len(sp_list)):
