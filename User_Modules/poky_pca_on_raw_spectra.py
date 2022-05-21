@@ -57,16 +57,30 @@ if None in sp_list:
   print('Experiment (' + none_name + ') does not exist in your spectrum list.')
   raise SystemExit
 
+scale_method = s.show_selectionexdialog('Scaler', 'Scale method: ', 
+                          ('Pareto', 'Unit', 'Raw'))
+
 def preprocess(data):
   # 2D -> 1D
   data1d = np.array(data).flatten()
+  
   # mean center
   avg = np.average(data1d)
   mc_data = np.subtract(data1d, avg)
-
-  # pareto scale
+  
+  # standard
+  mmax, mmin = np.max(mc_data), np.min(mc_data)
+  mc_data = np.divide(mc_data, (mmax - mmin))
+  
+  # apply scale
   std = np.std(mc_data)
-  data1d = np.divide(mc_data, np.sqrt(std))
+  if scale_method == 0: # pareto
+    data1d = np.divide(mc_data, np.sqrt(std))
+  elif scale_method == 1: # unit
+    data1d = np.divide(mc_data, std)
+  else: # raw
+    data1d = mc_data
+    
   return data1d
 
 dic, data = ng.sparky.read_lowmem(sp_list[0].data_path)
