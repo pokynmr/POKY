@@ -3,7 +3,7 @@
 #
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
-# Last Update: May 21, 2022 
+# Last Update: May 22, 2022 
 #
 # To run this script:
 #   In Poky Notepad,
@@ -71,12 +71,13 @@ if len(s.selected_peaks()) == 1:
 
 
 def preprocess(data):
-  # normalize
-  for i in range(len(data)):
-    dmin, dmax = min(data[i]), max(data[i])
-    if dmax == dmin:
-      continue
-    data[i] = np.divide(np.subtract(data[i], dmin), (dmax-dmin))
+  # normalize if no reference exists.
+  if ref_peak == None:
+    for i in range(len(data)):
+      dmin, dmax = min(data[i]), max(data[i])
+      if dmax == dmin:
+        continue
+      data[i] = np.divide(np.subtract(data[i], dmin), (dmax-dmin))
 
   for i in range(len(data[0])):
     d = data[:,i]
@@ -118,7 +119,7 @@ for i in range(0, len(sp_list)):
   if ref_peak != None:
     ref_hts = sp.data_height(ref_peak.frequency)
     data = np.divide(data, ref_hts)
-
+  
 data_stack = preprocess(data_stack)
 
 pca = PCA(n_components=2)
