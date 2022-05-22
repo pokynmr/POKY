@@ -22,6 +22,8 @@ print('------------------------------------------------------')
 
 ######################################################################
 # PARAMETERS
+# 0. Variance cutoff
+rho_cutoff = 0.6
 # 1. Use GUI to select spectra, and plot PC1 vs. PC2.
 spec_names = s.show_spectrumselectiondialog('Select spectra', 1)
 specname_list = spec_names.split('\t')
@@ -61,18 +63,28 @@ if None in sp_list:
 scale_method = s.show_selectionexdialog('Scaler', 'Scale method: ', 
                           ('Pareto', 'Unit', 'Raw'))
 
+ref_peak = None
+if len(s.selected_peaks()) == 1:
+  if s.show_message_yes_no('Peak Selected', 
+      'Is this selected peak the reference standard?'):
+    ref_peak = s.selected_peaks()[0]
+
+
 def preprocess(data):
   for i in range(len(data[0])):
+    d = data[:,i]
     # mean center
-    avg = np.average(data[:,i])
-    mc_data = np.subtract(data[:,i], avg)
+    avg = np.average(d)
+    mc_data = np.subtract(d, avg)
     
-    # standard
+    # filter
     std = np.std(mc_data)
-    mmax, mmin = np.max(mc_data), np.min(mc_data)
-    mc_data = np.divide(mc_data, (mmax - mmin))
-    if std == 0:
+    if std < rho_cutoff**.5:
+      data[:,i] = np.multiply(mc_data, 0)
       continue
+
+    #mmax, mmin = np.max(mc_data), np.min(mc_data)
+    #mc_data = np.divide(mc_data, (mmax - mmin))
     # apply scale
     if scale_method == 0: # pareto
       data1d = np.divide(mc_data, np.sqrt(std))
@@ -81,19 +93,30 @@ def preprocess(data):
     else: # raw
       data1d = mc_data
     data[:,i] = data1d
+
+  # remove zero column
+  print(data.shape)  
+  data = data[:,~(data==0).all(0)]
+  print(data.shape)
   return data
 
 for i in range(0, len(sp_list)):
   sp = sp_list[i]
   dic, data = ng.sparky.read_lowmem(sp.data_path)
+  
   if i == 0:
     data_stack = np.array(data).flatten()
-    print(data_stack.shape)
   else:
-    print(np.array(data).flatten().shape)
     data_stack = np.vstack((data_stack, np.array(data).flatten()))
 
+# apply reference if exists
+  if ref_peak != None:
+    ref_hts = sp.data_height(ref_peak.frequency)
+    data = np.divide(data, ref_hts)
+  
+print(data_stack.shape)
 data_stack = preprocess(data_stack)
+print(data_stack.shape)
 
 pca = PCA(n_components=2)
 converted_data = pca.fit_transform(data_stack)
