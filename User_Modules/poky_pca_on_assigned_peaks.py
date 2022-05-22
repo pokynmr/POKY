@@ -24,6 +24,8 @@ print('------------------------------------------------------')
 
 ######################################################################
 # PARAMETERS
+# 0. Variance cutoff
+rho_cutoff = 0.6
 # 1. Use GUI to select spectra, and plot PC1 vs. PC2.
 spec_names = s.show_spectrumselectiondialog('Select spectra', 1)
 specname_list = spec_names.split('\t')
@@ -67,16 +69,20 @@ if len(s.selected_peaks()) > 2:
 
 def preprocess(data):
   for i in range(len(data[0])):
+    d = data[:,i]
     # mean center
-    avg = np.average(data[:,i])
-    mc_data = np.subtract(data[:,i], avg)
+    avg = np.average(d)
+    mc_data = np.subtract(d, avg)
     
-    # standard
+    # filter
     std = np.std(mc_data)
-    mmax, mmin = np.max(mc_data), np.min(mc_data)
-    mc_data = np.divide(mc_data, (mmax - mmin))
-    if std == 0:
+    if std < rho_cutoff**.5:
+      data[:,i] = np.multiply(mc_data, 0)
       continue
+
+    # standard
+    #mmax, mmin = np.max(mc_data), np.min(mc_data)
+    #mc_data = np.divide(mc_data, (mmax - mmin))
     # apply scale
     if scale_method == 0: # pareto
       data1d = np.divide(mc_data, np.sqrt(std))
@@ -85,8 +91,11 @@ def preprocess(data):
     else: # raw
       data1d = mc_data
     data[:,i] = data1d
+  
+    # remove zero column  
+  data = data[:,~(data==0).all(0)]
   return data
-
+  
 res_list = []
 for i in range(len(sp_list)):
   sp = sp_list[i]
