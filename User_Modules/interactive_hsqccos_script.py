@@ -2,7 +2,7 @@
 # This is an example script for performing interactive HSQCcos.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: May 2, 2022
+# Last update: May 22, 2022
 #
 # To run this script:
 #   In Poky Notepad,
@@ -22,6 +22,7 @@ import __main__
 s = __main__.main_session
 
 import numpy as np
+import nmrglue as ng
 from sputil import name_to_spectrum
 
 print('\n\n\n------------------------------------------------------')
@@ -52,35 +53,58 @@ except:
   print('R cutoff must be a floating value.')
   raise SystemError
 
+# Get min-max of spectra for normalization
+range_list = []
+for spec in spec_list:        
+  dic, data = ng.sparky.read(spec.data_path)
+  #dic, data = ng.sparky.read_lowmem(spec.data_path)
+  dmax, dmin = np.max(data), np.min(data)
+  range_list.append([dmin, dmax, dmax - dmin])
+  
 # Set first peak as the reference peak
-peaks = [ref_peak, ]
-for peak in ref_spec.peak_list():
-  if peak not in peaks:
-    peaks.append(peak)
+peaks = ref_spec.peak_list()
+peaks.remove(ref_peak)
+peaks = [ref_peak, ] + peaks
 
-data_list = []
+# Also make sure ref_spec is first.
+spec_list.remove(ref_spec)
+spec_list = [ref_spec, ] + spec_list
 
 # Read the data in, and mean center and pareto scale
-for peak in peaks:
-  data_list.append([peak, []])
-  for spec in spec_list:
-    hts = spec.data_height(peak.frequency)
-    data_list[-1][1].append(hts)
-  data_list[-1][1] = np.array(data_list[-1][1])
-  # mean centered
-  avg = np.average(data_list[-1][1])
-  mc_data = np.subtract(data_list[-1][1], avg) 
-  # Pareto scale
+for i in range(len(peaks)):
+  peak = peaks[i]  
+  hts_list = []
+  for j in range(len(spec_list)):
+    spec = spec_list[j]
+    # Normalized height
+    hts = (spec.data_height(peak.frequency) - range_list[j][0]) \
+            / range_list[j][2] 
+    hts_list.append(hts)
+  if i == 0:
+    data_list = np.array(hts_list)
+  else:
+    data_list = np.vstack( [data_list, hts_list] )
+  
+# mean centered and pareto scale
+for i in range(len(data_list[0])):
+  # mean center
+  avg = np.average(data_list[:, i])
+  mc_data = np.subtract(data_list[:, i], avg) 
+  
+  # pareto scale
   std = np.std(mc_data)
-  data_list[-1][1] = np.divide(mc_data, np.sqrt(std))
+  if std != 0:
+    data_list[:, i] = np.divide(mc_data, np.sqrt(std))
 
 # R calculation against the reference peak
 # Select the peak if over R cutoff
 print('Reference peak %.3f, %.3f' % (ref_peak.frequency))
 print('------------------------------------------------------')
-ref_peak, ref_data = data_list[0]
-for peak_and_data in data_list[1:]:
-  peak, data = peak_and_data
+ref_data = data_list[0]
+for i in range(1, len(data_list)):
+  peak = peaks[i]
+  data = data_list[i]
+  #peak, data = peak_and_data
   R = np.corrcoef(ref_data, data)
   if abs(R[0][1]) >= Rcutoff:
     peak.selected = 1

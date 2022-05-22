@@ -108,7 +108,8 @@ def preprocess(data):
 
 for i in range(0, len(sp_list)):
   sp = sp_list[i]
-  dic, data = ng.sparky.read_lowmem(sp.data_path)
+  dic, data = ng.sparky.read(sp.data_path)
+  #dic, data = ng.sparky.read_lowmem(sp.data_path)
   
   if i == 0:
     data_stack = np.array(data).flatten()

@@ -41,7 +41,6 @@ CombineNuclei = s.show_message_yes_no('Nuclei consideration',
 
 from sputil import name_to_spectrum, parse_assignment
 import numpy as np
-import nmrglue as ng
 import matplotlib.pyplot as plt 
 from sklearn.decomposition import PCA
 
