@@ -118,10 +118,8 @@ for i in range(0, len(sp_list)):
   if ref_peak != None:
     ref_hts = sp.data_height(ref_peak.frequency)
     data = np.divide(data, ref_hts)
-  
-print(data_stack.shape)
+
 data_stack = preprocess(data_stack)
-print(data_stack.shape)
 
 pca = PCA(n_components=2)
 converted_data = pca.fit_transform(data_stack)
