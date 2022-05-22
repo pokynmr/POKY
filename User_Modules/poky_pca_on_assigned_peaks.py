@@ -24,8 +24,8 @@ print('------------------------------------------------------')
 
 ######################################################################
 # PARAMETERS
-# 0. Variance cutoff
-rho_cutoff = 0.6
+# 0. Variance cutoff.
+rho_cutoff = 0.0001
 # 1. Use GUI to select spectra, and plot PC1 vs. PC2.
 spec_names = s.show_spectrumselectiondialog('Select spectra', 1)
 specname_list = spec_names.split('\t')
