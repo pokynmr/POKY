@@ -95,9 +95,7 @@ def preprocess(data):
     data[:,i] = data1d
 
   # remove zero column
-  print(data.shape)  
   data = data[:,~(data==0).all(0)]
-  print(data.shape)
   return data
 
 for i in range(0, len(sp_list)):
