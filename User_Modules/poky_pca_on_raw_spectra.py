@@ -74,6 +74,8 @@ def preprocess(data):
   # normalize
   for i in range(len(data)):
     dmin, dmax = min(data[i]), max(data[i])
+    if dmax == dmin:
+      continue
     data[i] = np.divide(np.subtract(data[i], dmin), (dmax-dmin))
 
   for i in range(len(data[0])):
