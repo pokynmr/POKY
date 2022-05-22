@@ -71,8 +71,14 @@ if len(s.selected_peaks()) == 1:
 
 
 def preprocess(data):
+  # normalize
+  for i in range(len(data)):
+    dmin, dmax = min(data[i]), max(data[i])
+    data[i] = np.divide(np.subtract(data[i], dmin), (dmax-dmin))
+
   for i in range(len(data[0])):
     d = data[:,i]
+
     # mean center
     avg = np.average(d)
     mc_data = np.subtract(d, avg)
@@ -81,7 +87,6 @@ def preprocess(data):
     std = np.std(mc_data)
     if std < rho_cutoff**.5:
       data[:,i] = np.multiply(mc_data, 0)
-      continue
 
     #mmax, mmin = np.max(mc_data), np.min(mc_data)
     #mc_data = np.divide(mc_data, (mmax - mmin))
@@ -118,12 +123,19 @@ print(data_stack.shape)
 
 pca = PCA(n_components=2)
 converted_data = pca.fit_transform(data_stack)
-
+loadings = pca.components_.T
+print('Loadings')
+print(loadings)
 plt.figure()
 
 # PC1 vs. PC2
 if 'spec_list' not in locals():
   plt.scatter(converted_data[:, 0], converted_data[:, 1])
+  #for i in range(len(loadings)):
+    #l = loadings[i]
+    #plt.arrow(0, 0, l[0], l[1],color = 'r',alpha = 0.5)
+    #plt.text(l[0]* 1.15, l[1] * 1.15, 
+    #        "Var"+str(i+1), color = 'g', ha = 'center', va = 'center')
   plt.xlabel('PC1') , plt.ylabel('PC2')
   print('----------------------------------------------')
   print('%-20s %-15s %-15s' % \
