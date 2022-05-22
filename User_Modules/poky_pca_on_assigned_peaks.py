@@ -68,6 +68,11 @@ if len(s.selected_peaks()) > 2:
   sp_list = [s.selected_peaks()[0].spectrum,] + sp_list  
 
 def preprocess(data):
+  # normalize
+  for i in range(len(data)):
+    dmin, dmax = min(data[i]), max(data[i])
+    data[i] = np.divide(np.subtract(data[i], dmin), (dmax-dmin))
+
   for i in range(len(data[0])):
     d = data[:,i]
     # mean center
@@ -168,11 +173,18 @@ data_stack = preprocess(data_stack)
 
 pca = PCA(n_components=2)
 converted_data = pca.fit_transform(data_stack)
-
+loadings = pca.components_.T
+print('Loadings')
+print(loadings)
 plt.figure()
 
 # PC1 vs. PC2
 plt.scatter(converted_data[:, 0], converted_data[:, 1])
+for i in range(len(loadings)):
+  l = loadings[i]
+  plt.arrow(0, 0, l[0], l[1],color = 'r',alpha = 0.5)
+  plt.text(l[0]* 1.15, l[1] * 1.15, 
+          "Var"+str(i+1), color = 'g', ha = 'center', va = 'center')
 plt.xlabel('PC1') , plt.ylabel('PC2')
 print('----------------------------------------------')
 print('%-20s %-15s %-15s' % \
