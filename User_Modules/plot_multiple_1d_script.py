@@ -75,7 +75,7 @@ for i in range(len(peaks)):
       plt.xlabel(xlabel)
       plt.ylabel(ylabel)
       plt.title(title)
-    plt.plot(xdata, ydata, cmap[i % len(cmap)] + mmap[i // len(mmap)])
+    plt.plot(xdata, ydata, cmap[i % len(cmap)] + mmap[i // len(cmap)])
 
 plt.pause(0.1)
 plt.show(block=False)
