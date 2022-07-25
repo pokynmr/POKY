@@ -3,8 +3,15 @@
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
 # To run this script:
-#   In Poky Notepad,
+#
+#   1. Select multiple peaks from different spectra. 
+#      Hold SHIFT key while selecting a peak not to lose a peak selection.
+#
+#   2. In Poky Notepad,
 #     File -> Run Python Module
+#
+#   To distinguish peaks by elevating intensity, modify the intensity_gap.
+#
 
 # intensity gap between peaks
 intensity_gap = 0 #10**5
@@ -75,7 +82,7 @@ for i in range(len(peaks)):
       plt.xlabel(xlabel)
       plt.ylabel(ylabel)
       plt.title(title)
-    plt.plot(xdata, ydata, cmap[i % len(cmap)] + mmap[i // len(cmap)])
+    plt.plot(xdata, ydata, cmap[i % len(cmap)] + mmap[i // len(cmap) % len(mmap)])
 
 plt.pause(0.1)
 plt.show(block=False)
