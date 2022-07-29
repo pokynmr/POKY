@@ -118,5 +118,15 @@
     "author" : "Mirdita et al.",
     "image" : "",
     "update_date" : "2022-01-05"
-    }
+    },
+"12":
+    {
+    "name" : "RaSPLab: Rapid protein stability prediction",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/RaSPLab.ipynb",
+    "description" : "Rapid protein stability prediction using deep learning representations.",
+    "source" : "https://github.com/KULL-Centre",
+    "author" : "Blaabjerg et al.",
+    "image" : "",
+    "update_date" : "2022-07-28"
+    },
 }
