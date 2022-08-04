@@ -69,6 +69,8 @@ def plot(nucleus, xdata, ydata, bt):
   plt.ylabel(ylabel)
   plt.title(title)
   plt.plot(xdata, ydata, 'b-')
+  ax = plt.gca()
+  ax.invert_xaxis()
 
   plt.pause(0.1)
   plt.show(block=False)
