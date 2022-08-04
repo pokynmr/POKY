@@ -83,6 +83,8 @@ for i in range(len(peaks)):
       plt.ylabel(ylabel)
       plt.title(title)
     plt.plot(xdata, ydata, cmap[i % len(cmap)] + mmap[i // len(cmap) % len(mmap)])
+    ax = plt.gca()
+    ax.invert_xaxis()
 
 plt.pause(0.1)
 plt.show(block=False)
