@@ -1,5 +1,5 @@
 #
-# This is an example script to calculate BB & HA RMSD from PDB ensemble file.
+# This is an example script to calculate BB & HA RMSD from a PDB ensemble file.
 # This script runs on POKY BUILD 02/06/21e or newer
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
@@ -56,7 +56,7 @@ ha_rmsd_std = np.std(ha_rmsds)
 
 print('\n\n* POKY ENSEMBLE RMSD')
 print('* PDB FILE: ' + in_file)
-print('* Ordered residues by CYRANGE: ' + ordered)
+print('* Ordered residues: ' + ordered)
 print('MODEL        BB RMSD  HA RMSD')
 
 for i in range(2, nmodel+1):
