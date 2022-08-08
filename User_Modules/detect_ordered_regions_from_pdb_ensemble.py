@@ -8,7 +8,7 @@
 #     File -> Run Python Module
 #
 # Using Sven Hyberts 1992 paper (doi: 10.1002/pro.5560010606)
-#  PHI/PSI deviation over 24 degree might be not well defined. (S < 0.9)
+#  PHI/PSI deviation over 24 degree might be "not well defined." (S < 0.9)
 
 import __main__
 s = __main__.main_session
