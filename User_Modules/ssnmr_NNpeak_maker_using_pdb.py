@@ -5,7 +5,7 @@
 # Labels without "_s" mean they are from existing resonances
 # "_s" tags can be removed by "ut" (untag _s) or "cu" (untag _s and center)
 # 
-# This version uses PDB and distances. Supports CC and NN now.
+# This version uses PDB and distances. Supports NN now.
 #
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
@@ -13,7 +13,6 @@
 #   In Poky Notepad,
 #     File -> Run Python Module (CTRL+B)
 #
-# Future development may include non-short mixing time data
 #
 
 
