@@ -26,6 +26,19 @@ if spec.dimension != 2:
   print('Only supports 2D data now.')
   raise SystemError
 
+specnames = s.show_spectrumselectiondialog('Select spectra', 1)
+specname_list = specnames.split('\t')
+if len(specname_list) == 0:
+  raise SystemExit
+
+from sputil import name_to_spectrum
+sp_list = list(map(lambda sp: name_to_spectrum(sp, s), specname_list))
+
+if None in sp_list:
+  none_name = specname_list[sp_list.index(None)]
+  print('Spectrum (' + none_name + ') does not exist in your spectrum list.')
+  raise SystemExit
+
 dim, dim2 = 0, 1
 vregion, region = view.region, spec.region
 
@@ -48,29 +61,22 @@ xdata = np.array(list(map(lambda x: vregion[1][dim] - ppm_per_pt * x,
 ydata = np.array(list(map(lambda x: vregion[1][dim2] - ppm_per_pt2 * x,
                                   range(vnpoint2))))
 
-# intensity
-idata2d = np.zeros((vnpoint, vnpoint2))
-for i in range(vnpoint):
-  for j in range(vnpoint2):
-    idata2d[i, j] = spec.data_height((xdata[i], ydata[j]))
-
-# sum along axis
-idata = np.sum(idata2d, axis=1)
-idata2 = np.sum(idata2d, axis=0)
-
 # plotting
-def plot(nucleus, xdata, ydata, bt):
+def plot(fig, sp, nucleus, xdata, ydata, bt):
   xlabel = nucleus + ' (ppm)'
   ylabel = 'Data Height'
   title = 'Poky 1D Projection between ' + bt
-    
-  plt.figure()
+
+  if fig == None:
+    fig = plt.figure()
+  else:
+    plt.figure(fig)
   plt.xlabel(xlabel)
   plt.ylabel(ylabel)
   plt.title(title)
   try:
     from colormap import get_contour_hex_color
-    c = get_contour_hex_color(spec)
+    c = get_contour_hex_color(sp)
     plt.plot(xdata, ydata, color=c, linestyle='-')
   except:
     plt.plot(xdata, ydata, 'b-')
@@ -79,6 +85,21 @@ def plot(nucleus, xdata, ydata, bt):
 
   plt.pause(0.1)
   plt.show(block=False)
+  return fig
 
-plot(nucleus, xdata, idata, '%.3f and %.3f' % (vregion[0][1], vregion[1][1]))
-plot(nucleus2, ydata, idata2, '%.3f and %.3f' % (vregion[0][0], vregion[1][0]))
+# intensity
+idata2d = np.zeros((vnpoint, vnpoint2))
+
+for sp in sp_list:
+  for i in range(vnpoint):
+    for j in range(vnpoint2):
+      idata2d[i, j] = sp.data_height((xdata[i], ydata[j]))
+
+  # sum along axis
+  idata = np.sum(idata2d, axis=1)
+  idata2 = np.sum(idata2d, axis=0)
+
+  plot(spec.name + '_view_1', sp, nucleus, xdata, idata, 
+              '%.3f and %.3f' % (vregion[0][1], vregion[1][1]))
+  plot(spec.name + '_view_2', sp, nucleus2, ydata, idata2, 
+              '%.3f and %.3f' % (vregion[0][0], vregion[1][0]))

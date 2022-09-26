@@ -61,7 +61,12 @@ for dim in range(len(pos)):
     title += ' for ' + peak.resonances()[0].group.name
 
   plt.figure()
-  plt.plot(xdata, ydata, 'b-')
+  try:
+    from colormap import get_contour_hex_color
+    c = get_contour_hex_color(spec)
+    plt.plot(xdata, ydata, color=c, linestyle='-')
+  except:
+    plt.plot(xdata, ydata, 'b-')
   plt.xlabel(xlabel)
   plt.ylabel(ylabel)
   plt.title(title)
