@@ -1,50 +1,64 @@
 #
-# This is an example script to plot 1D slice of selected multiple peaks.
+# This is an example script to plot multiple 1D slices of a selected peak.
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
+#
+# Runs BUILD 08/25/2022c or newer
+#
 # To run this script:
-#
-#   1. Select multiple peaks from different spectra. 
-#      Hold SHIFT key while selecting a peak not to lose a peak selection.
-#
-#   2. In Poky Notepad,
+#   In Poky Notepad,
 #     File -> Run Python Module
-#
-#   To distinguish peaks by elevating intensity, modify the intensity_gap.
-#
-
-# intensity gap between peaks
-intensity_gap = 0 #10**5
 
 import __main__
 s = __main__.main_session
 proj = s.project
 
-if len(s.selected_peaks()) < 1:
-  print('Peak should be selected.')
+
+if len(s.selected_peaks()) != 1:
+  print('One peak should be selected.')
   raise SystemExit
 
-peaks = s.selected_peaks()
+peak = s.selected_peaks()[0]
+pos = peak.position
+peak_spec = peak.spectrum
 
+specnames = s.show_spectrumselectiondialog('Select spectra', 1)
+specname_list = specnames.split('\t')
+if len(specname_list) == 0:
+  raise SystemExit
+
+from sputil import name_to_spectrum
+sp_list = list(map(lambda sp: name_to_spectrum(sp, s), specname_list))
+
+if None in sp_list:
+  none_name = specname_list[sp_list.index(None)]
+  print('Spectrum (' + none_name + ') does not exist in your spectrum list.')
+  raise SystemExit
+
+from colormap import get_contour_hex_color
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import use as matplotlib_use
 matplotlib_use('TkAgg')
-cmap = 'bgrcmyb'
-mmap = ['-', '--', '-.', ':', '.',',', 'o', 'v', '^', '<', '>', '1', '2', 
-  '3', '4', 's', 'p', '*', 'h', 'H', '+', 'x', 'D', 'd', '|', '_']
 
-for i in range(len(peaks)):
-  peak = peaks[i]
-  pos = peak.position
-  spec = peak.spectrum
+for dim in range(len(pos)):
+  # plotting parameters
+  proj_pos = list(pos)
+  proj_pos.pop(dim)
+  xlabel = peak_spec.nuclei[dim] + ' (ppm)'
+  ylabel = 'Data Height'
+  title = 'Poky 1D Slice at'
+  for i in range(len(proj_pos)):
+    title += ' %.2f ppm' % (proj_pos[i])
+  if peak.is_assigned:
+    title += ' for ' + peak.resonances()[0].group.name
+  plt.figure()
 
-  for dim in range(len(pos)):
-    nucleus = spec.nuclei[dim]
+  for spec in sp_list:
     region, npoint = spec.region, spec.data_size[dim]
     ppm_per_pt = spec.spectrum_width[dim] / (npoint - 1)
     xdata = np.array(list(map(lambda x: region[1][dim] - ppm_per_pt * x,
-                                      range(npoint))))
+                                    range(npoint))))
     if len(pos) == 2:
       if dim == 0:
         ydata = np.array(list(map(lambda x:
@@ -63,28 +77,14 @@ for i in range(len(peaks)):
       else:
         ydata = np.array(list(map(lambda x:
                     spec.data_height((pos[0], pos[1], xdata[x])), range(npoint))))
-    
-    ydata += intensity_gap * i
-    # plotting
-    if i == 0:
-      proj_pos = list(pos)
-      proj_pos.pop(dim)
-      xlabel = nucleus + ' (ppm)'
-      ylabel = 'Data Height'
-      title = 'Poky 1D Slice at'
-      for j in range(len(proj_pos)):
-        title += ' %.2f ppm' % (proj_pos[j])
-      if peak.is_assigned:
-        title += ' for ' + peak.resonances()[0].group.name
-      
-    plt.figure(str(dim+1)+ ' dimension slice')
-    if i == 0:
-      plt.xlabel(xlabel)
-      plt.ylabel(ylabel)
-      plt.title(title)
-    plt.plot(xdata, ydata, cmap[i % len(cmap)] + mmap[i // len(cmap) % len(mmap)])
-    ax = plt.gca()
-    ax.invert_xaxis()
+    c = get_contour_hex_color(spec)
+    plt.plot(xdata, ydata, color=c, linestyle='-')
 
-plt.pause(0.1)
-plt.show(block=False)
+  plt.xlabel(xlabel)
+  plt.ylabel(ylabel)
+  plt.title(title)
+  ax = plt.gca()
+  ax.invert_xaxis()
+
+  plt.pause(0.1)
+  plt.show(block=False)
