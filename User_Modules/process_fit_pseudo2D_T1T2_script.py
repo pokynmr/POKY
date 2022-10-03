@@ -120,3 +120,4 @@ def plotT(x, y, y2):
 
 popt, pcov, point_sd = calcT(vd_list, sum_list)
 y2 = list(map(lambda x: exp_func(x, popt[0], popt[1]), vd_list))
+plotT(vd_list, sum_list, y2)
