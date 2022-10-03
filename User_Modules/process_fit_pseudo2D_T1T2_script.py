@@ -9,6 +9,9 @@
 
 import nmrglue as ng
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from matplotlib import use as matplotlib_use
 
 import os
 import __main__
@@ -74,9 +77,17 @@ for i in range(len(vd_list)):
   sum_list.append(np.sum(data[i,idc].real))
 
 # calculate T1/T2
-def exp_func(x, a, b):
+def exp_func_T1(x, a, b):
+  return a * (1-np.exp(-1 * x / b))
+  
+def exp_func_T2(x, a, b):
   return a * np.exp(-1 * x / b)
-from scipy.optimize import curve_fit
+
+if np.sum(sum_list[:int(len(sum_list)/2)]) < \
+    np.sum(sum_list[int(len(sum_list)/2):]):
+  exp_func = exp_func_T1
+else:
+  exp_func = exp_func_T2
 
 # Calculation function definition
 # This uses a whole integration
@@ -89,5 +100,23 @@ def calcT(vd_list, sum_list):
   
   print('T-decay: ' + str(popt[1]))
   print('Deviation: ' + str(point_sd[1]))
+
+  return popt, pcov, point_sd
   
-calcT(vd_list, sum_list)
+def plotT(x, y, y2):
+  xlabel = 'Time Parameter (s)'
+  ylabel = 'Integration'
+
+  title = 'POKY T-decay relaxation'
+  plt.figure()
+  plt.scatter(x, y, c='r')
+  plt.plot(x, y2, 'b-')
+  plt.xlabel(xlabel)
+  plt.ylabel(ylabel)
+  plt.title(title)
+  plt.ylim([0, max(y+y2) * 1.1])
+  plt.pause(0.1)
+  plt.show(block=False)
+
+popt, pcov, point_sd = calcT(vd_list, sum_list)
+y2 = list(map(lambda x: exp_func(x, popt[0], popt[1]), vd_list))
