@@ -52,7 +52,6 @@ for i in range(sp.dimension):
 
 new_data = scipy.ndimage.zoom(data, zoom_list, mode='nearest')
 
-# combine
 ng.sparky.write(new_path, dic, new_data, overwrite=True)
 
 if s.show_message_yes_no('Load data', 
