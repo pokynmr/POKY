@@ -38,7 +38,6 @@ def query_esmfold(seq, outname):
     'Content-Type': 'application/x-www-form-urlencoded',
   }
 
-
   response = requests.post('https://api.esmatlas.com/foldSequence/v1/pdb/', 
                             headers=headers, data=seq)
   
@@ -55,7 +54,8 @@ outname = s.save_filedialog('Save as', 'PDB (*.pdb);; Any (*)', '')
 if outname == '':
   raise SystemError
 
-query_esmfold(sequence, outname)
+if not query_esmfold(sequence, outname):
+  raise SystemError
 
 if pymol:
   s.set_clipboard(f'load {outname}')
