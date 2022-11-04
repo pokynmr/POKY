@@ -1,5 +1,5 @@
 #
-# This is an example script for running esmfold and open in PyMOL.
+# This is an example script for running esmfold and openning in PyMOL.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 # Last update: Nov. 3, 2022
