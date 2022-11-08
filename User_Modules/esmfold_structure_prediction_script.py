@@ -2,7 +2,7 @@
 # This is an example script for running esmfold and openning in PyMOL.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: Nov. 3, 2022
+# Last update: Nov. 8, 2022
 #
 # Reference: https://github.com/JinyuanSun/PymolFold
 #
@@ -67,7 +67,7 @@ if pymol:
     cmd += f'color {c_list[0]}, ({objname}) and (b >0.90 or b =0.90); '
     cmd += f'color {c_list[1]}, ({objname}) and ((b <0.90 and b >0.70) or (b =0.70)); '
     cmd += f'color {c_list[2]}, ({objname}) and ((b <0.70 and b >0.50) or (b =0.50)); '
-    cmd += f'color {c_list[2]}, ({objname}) and ((b <0.50 and b >0.0 ) or (b=0.0))'
+    cmd += f'color {c_list[2]}, ({objname}) and ((b <0.50 and b >0.0 ) or (b =0.0))'
   s.set_clipboard(f'{cmd}')
   s.show_message('PyMOL', 'Ctrl+V into PyMOL commandline.')
   s.open_pymol('')
