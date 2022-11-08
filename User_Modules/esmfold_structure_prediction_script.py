@@ -60,10 +60,8 @@ if not query_esmfold(sequence, outname):
   raise SystemError
 
 if pymol:
-  def direct_format(r, g, b):
-    return f'0x{r:02x}{g:02x}{b:02x}'
   objname = os.path.splitext(os.path.basename(outname))[0]  
-  c_list = ['0x0053d7', '0x57caf9', '0x100db12', '0x1007e45']
+  c_list = ['0x0053d7', '0x57caf9', '0xffdb12', '0xff7e45']
   cmd = f'load {outname}; '
   if pLDDTcolor:
     cmd += f'color {c_list[0]}, ({objname}) and (b >0.90 or b =0.90); '
