@@ -17,6 +17,7 @@
 sequence = '''MQIFVKTLTG KTITLEVEPS DTIENVKAKI QDKEGIPPDQ QRLIFAGKQL
               EDGRTLSDYN IQKESTLHLV LRLRGG'''
 pymol = True
+pLDDTcolor = True
 ######################
 # USER PARAMETER END
 ######################
@@ -59,6 +60,16 @@ if not query_esmfold(sequence, outname):
   raise SystemError
 
 if pymol:
-  s.set_clipboard(f'load {outname}')
+  def direct_format(r, g, b):
+    return f'0x{r:02x}{g:02x}{b:02x}'
+  objname = os.path.splitext(os.path.basename(outname))[0]  
+  c_list = ['0x0053d7', '0x57caf9', '0x100db12', '0x1007e45']
+  cmd = f'load {outname}; '
+  if pLDDTcolor:
+    cmd += f'color {c_list[0]}, ({objname}) and (b >0.90 or b =0.90); '
+    cmd += f'color {c_list[1]}, ({objname}) and ((b <0.90 and b >0.70) or (b =0.70)); '
+    cmd += f'color {c_list[2]}, ({objname}) and ((b <0.70 and b >0.50) or (b =0.50)); '
+    cmd += f'color {c_list[2]}, ({objname}) and ((b <0.50 and b >0.0 ) or (b=0.0))'
+  s.set_clipboard(f'{cmd}')
   s.show_message('PyMOL', 'Ctrl+V into PyMOL commandline.')
   s.open_pymol('')
