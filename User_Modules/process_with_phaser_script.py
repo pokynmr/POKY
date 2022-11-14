@@ -20,8 +20,9 @@ DigitalFilter = True  # Remove digital filter (Bruker)
 # Encodings: None, 'undefined', 'magnitude', 
 # 'tppi', 'states', 'states-tppi', 'echo-antiecho'
 w1_encoding, w2_encoding, w3_encoding = None, None, None
-# Baseline correction
-median_baseline_correction = False
+# Baseline correction: (T/F, T/F, T/F)
+median_baseline_correction = (False, False, False)
+polyfit_baseline_correction = (True, True, True)
 # Zero-filling: (True/False, 'auto' or size)
 w1_zf, w2_zf, w3_zf = (True, 1024), (True, 1024), (True, 1024)
 # Linear prediction
@@ -39,6 +40,7 @@ w3_off, w3_end, w3_pow, w3_c = 0.45, 0.98, 2, 0.5
 w1_p0, w1_p1 = None, None
 w2_p0, w2_p1 = None, None
 w3_p0, w3_p1 = None, None
+
 ##################################################################
 # USER PARAMETER END
 ##################################################################
@@ -102,6 +104,13 @@ dic, data = C.to_pipe()
 # You can stop running this code before that by adding
 #   raise SystemError
 for dim in range(ndim):
+  # Time Domain Correction
+  if dim == 0:
+    try:
+      data = pokyphaser.td_bl(data)
+    except:
+      import numpy as np
+      data -= np.mean(np.atleast_2d(data)[..., int(data.shape[-1] / -4.):])
   # Apodization
   dic, data = ng.pipe_proc.sp(dic, data, 
     off=sp_list[dim]['off'], end=sp_list[dim]['end'], 
@@ -142,10 +151,16 @@ for dim in range(ndim):
   elif ext_list[dim] == 'right':
     dic, data = ng.pipe_proc.ext(dic, data, right=True)
   # Baseline Correction
-  if median_baseline_correction:
+  if median_baseline_correction[dim]:
     data = ng.proc_bl.med(data)
     data = ng.proc_base.tp(data)
     data = ng.proc_bl.med(data)
+  if polyfit_baseline_correction[dim]:
+    try:
+      data -= pokyphaser.fd_poly_bl(data, deg=2)
+    except:
+      print('Warning. Update your POKY to use fd_poly_bl.')
+      continue
   # Reverse Data
   if reverse_list[dim]:
     dic, data = ng.pipe_proc.rev(dic, data, sw=True)
