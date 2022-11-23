@@ -2,7 +2,7 @@
 # This is an example script for running esmfold and openning in PyMOL.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: Nov. 8, 2022
+# Last update: Nov. 23, 2022
 #
 # Reference: https://github.com/JinyuanSun/PymolFold
 #
