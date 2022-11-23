@@ -119,7 +119,6 @@
     "image" : "",
     "update_date" : "2022-01-05"
     },
-
 "12":
     {
     "name" : "Rapid protein stability prediction",
@@ -129,5 +128,15 @@
     "author" : "Blaabjerg et al.",
     "image" : "",
     "update_date" : "2022-08-01"
+    },
+"13":
+    {
+    "name" : "ESMFold",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ESMFold.ipynb",
+    "description" : "ESMFold (Evolutionary Scale Modeling) by Meta AI.",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "S. Ovchinnikov",
+    "image" : "",
+    "update_date" : "2022-11-23"
     }
 }
