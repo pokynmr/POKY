@@ -10,6 +10,9 @@
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
+# For Multimer Calculation:
+#   Use Colab version from POKY Notebooks (two-letter-code PN or File Menu) 
+#
 
 ######################
 # USER PARAMETER START
