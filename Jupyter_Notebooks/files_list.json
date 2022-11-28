@@ -138,5 +138,25 @@
     "author" : "S. Ovchinnikov",
     "image" : "",
     "update_date" : "2022-11-23"
-    }
+    },
+"14":
+    {
+    "name" : "Nucleotide Molecular Weight",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/nucleotide_molecular_weight.ipynb",
+    "description" : "Nucleotide Molecular Weight Calculator",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2022-11-27",
+    },
+"15":
+    {
+    "name" : "Amino Acid Molecular Weight",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/amino_acid_molecular_weight.ipynb",
+    "description" : "Amino Acid Molecular Weight Calculator",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2022-11-27",
+    },
 }
