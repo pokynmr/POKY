@@ -141,7 +141,7 @@
     },
 "14":
     {
-    "name" : "Nucleotide Molecular Weight",
+    "name" : "Nucleotide Molecular Weight Calculator",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/nucleotide_molecular_weight.ipynb",
     "description" : "Nucleotide Molecular Weight Calculator",
     "source" : "https://github.com/pokyNMR/POKY",
@@ -151,7 +151,7 @@
     },
 "15":
     {
-    "name" : "Amino Acid Molecular Weight",
+    "name" : "Amino Acid Molecular Weight Calculator",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/amino_acid_molecular_weight.ipynb",
     "description" : "Amino Acid Molecular Weight Calculator",
     "source" : "https://github.com/pokyNMR/POKY",
