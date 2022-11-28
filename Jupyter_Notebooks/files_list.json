@@ -147,7 +147,7 @@
     "source" : "https://github.com/pokyNMR/POKY",
     "author" : "Woonghee Lee",
     "image" : "",
-    "update_date" : "2022-11-27",
+    "update_date" : "2022-11-27"
     },
 "15":
     {
@@ -157,6 +157,6 @@
     "source" : "https://github.com/pokyNMR/POKY",
     "author" : "Woonghee Lee",
     "image" : "",
-    "update_date" : "2022-11-27",
-    },
+    "update_date" : "2022-11-27"
+    }
 }
