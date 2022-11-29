@@ -70,10 +70,11 @@ if not query_esmfold(sequence, tmp_outname):
 import Poky_CSpred
 try:
   d = Poky_CSpred.show_CSpred(s)
+  d.pdb_field.set(tmp_outname)
 except:
   s.show_message('Error', 'Update POKY. Your version is old.')
   raise SystemError
-d.pdb_field.set(tmp_outname)
+
 if not d.submit_to_server():
   s.show_message('Error', 'POKY CSPred failed. Try later.')
   raise SystemError
