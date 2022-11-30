@@ -48,8 +48,8 @@ except:
 
 proj = s.project
 
-dic, data = ng.sparky.read_lowmem(sp.data_path)
-dic2, data2 = ng.sparky.read_lowmem(sp2.data_path)
+dic, data = ng.sparky.read(sp.data_path)
+dic2, data2 = ng.sparky.read(sp2.data_path)
 data3 = np.array(data2)
 
 # apply offset differences
@@ -61,7 +61,7 @@ for i in range(sp.dimension):
 
 data3 = np.array(data) + factor*np.array(data3)
 
-ng.sparky.write_lowmem(new_path, dic, data3, overwrite=True)
+ng.sparky.write(new_path, dic, data3, overwrite=True)
 
 if s.show_message_yes_no('Load data', 'Do you want to load the concatenated spectrum?'):
   s.open_spectrum(new_path)
