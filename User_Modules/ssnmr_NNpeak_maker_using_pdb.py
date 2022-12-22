@@ -5,7 +5,7 @@
 # Labels without "_s" mean they are from existing resonances
 # "_s" tags can be removed by "ut" (untag _s) or "cu" (untag _s and center)
 # 
-# This version uses PDB and distances. Supports NN now.
+# This version uses PDB and distances. Supports NN and CC now.
 #
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
@@ -74,17 +74,17 @@ use_resonances = True
 from sputil import name_to_spectrum
 spec = name_to_spectrum(spec_name, s)
 if spec == None:
-  s.show_message('Error', 'Spectrum is not set properly.')
+  s.show_message('Error', 'The spectrum is not set properly.')
   raise SystemExit
 
-#avail_exp_list = ['2D-CC', '2D-NN']
-#idx = s.show_selectionexdialog('Experiment', 
-#                          'Select the experiment to simulate', 
-#                          tuple(avail_exp_list + ['Cancel',]))
-#if idx in [len(avail_exp_list), -1]:
-#  raise SystemExit
-#spec_type = avail_exp_list[idx]
-spec_type = '2D-NN'
+nuc = ''.join(spec.nuclei)
+if nuc == '13C13C':
+  spec_type = '2D-CC'
+elif nuc == '15N15N':
+  spec_type = '2D-NN'
+else:
+  s.show_message('Error', 'The spectrum is neither N-N nor C-C.')
+  raise SystemExit
 
 from myseq import AAA_dict, A_dict, ReadSequence
 
@@ -97,7 +97,6 @@ from shiftx2 import fetch_shiftx2_to_dict
 # dict: 'M1CA': 63.2
 from sputil import parse_poky_shift_to_dict
 
-import os, sys
 import numpy as np
 from math import sqrt
 from pacsysimulate import get_pacsy_freq
@@ -136,6 +135,7 @@ def get_freq_from_dict(cs_dict, ga):
     return cs_dict[ga]
   except:
     return None
+  
 # function for preparing for each dimension
 def get_prepared(j, sequence, res_prof, idx):
   a = sequence[j+res_prof[idx][0]]
@@ -208,7 +208,7 @@ def readPDB(pdb, modelnumber):
 
   return modelList[modelnumber - 1]
 
-def createDistanceMatrix(pdb_list, cutoffAtom, cutoffDist):
+def createDistanceMatrix(pdb_list):
   distMat = np.zeros( (len(pdb_list), len(pdb_list)) )
   keyList = []
   for i in range(len(pdb_list)):
@@ -235,22 +235,23 @@ elif spec_type == '2D-CC':
 # create distance matrix
 # read PDB
 pdb_list = readPDB(pdb_file, int(model_number))
-print(pdb_list)
-distMat, keyList = createDistanceMatrix(pdb_list, cutoffAtom, cutoffDist)
+distMat, keyList = createDistanceMatrix(pdb_list)
 peak_list = []
 
 for i in range(len(keyList)):
   key = keyList[i]
   nSeq, x, y, z, aaa, a, atm = pdb_list[i]
   
-  if atm != cutoffAtom: continue
-
+  if atm[0] != cutoffAtom: continue
+  heavyatm = spec_type[3] + atm[1:]
+  
   # dim1
-  ga1 = '%s%dN' % (a, nSeq)  
-  pcs1 = get_pacsy_freq(a, 'N', None, None)
+  ga1 = '%s%d%s' % (a, nSeq, heavyatm)  
+  pcs1 = get_pacsy_freq(a, heavyatm, None, None)
   cs1 = get_freq_from_dict(cs_dict, ga1)
-  ucs1 = get_user_freq(ga1[:-1], 'N')
-    
+  ucs1 = get_user_freq('%s%d' % (a, nSeq), heavyatm)
+  print((a, nSeq, heavyatm, ucs1))
+
   if cs1 == None and pcs1 < 500: cs1 = pcs1
   if ucs1 != None and use_resonances: cs1 = ucs1
   else: ga1 += '_s'
@@ -261,13 +262,15 @@ for i in range(len(keyList)):
   for j in range(i+1, len(keyList)):
     key2 = keyList[j]
     nSeq2, x2, y2, z2, aaa2, a2, atm2 = pdb_list[j]
-    if atm2 != cutoffAtom: continue
+    if atm2[0] != cutoffAtom: continue
+    heavyatm2 = spec_type[3] + atm2[1:]
+
     if distMat[i, j] > cutoffDist: continue
             
-    ga2 = '%s%dN' % (a2, nSeq2)  
-    pcs2 = get_pacsy_freq(a, 'N', None, None)
+    ga2 = '%s%d%s' % (a2, nSeq2, heavyatm2)  
+    pcs2 = get_pacsy_freq(a2, heavyatm2, None, None)
     cs2 = get_freq_from_dict(cs_dict, ga2)
-    ucs2 = get_user_freq(ga2[:-1], 'N')
+    ucs2 = get_user_freq('%s%d' % (a2, nSeq2), heavyatm2)
       
     if cs2 == None and pcs2 < 500: cs2 = pcs2
     if ucs2 != None and use_resonances: cs2 = ucs2
