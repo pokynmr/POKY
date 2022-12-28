@@ -158,5 +158,15 @@
     "author" : "Woonghee Lee",
     "image" : "",
     "update_date" : "2022-11-27"
+    },
+"16":
+    {
+    "name" : "Model-Free Analysis",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ModelFreeAnalysis.ipynb",
+    "description" : "POKY Model-Free Analysis Notebook",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2022-12-28"
     }
 }
