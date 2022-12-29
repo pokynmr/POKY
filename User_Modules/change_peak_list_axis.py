@@ -83,7 +83,7 @@ def build_lines(data, content):
     a_list, w_list, wf_list, others = d
     lbl = '-'.join(a_list)
     w = ' '.join(list(map(lambda x: '%9s' % x, w_list)))
-    line = '%17s    %s    %s\n' % (lbl, w, others)
+    line = '%20s    %s    %s\n' % (lbl, w, others)
     content += line
   return content
 
