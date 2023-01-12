@@ -72,6 +72,7 @@ for line in cs_lines:
   if len(splited) < 5: continue
   if splited[0][0] == '#': continue
   try:
+    if float(splited[1]) > 500: continue
     record = [int(splited[4]), aaa2a(seq_list[int(splited[4])][1]), 
               splited[3], float(splited[1])]
     cs_list.append(record)
