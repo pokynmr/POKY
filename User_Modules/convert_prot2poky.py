@@ -13,7 +13,7 @@
 # POKY libraries
 import __main__
 s = __main__.main_session
-from myseq import AAA_dict, A_dict, aaa2a, a2aaa
+from myseq import aaa2a
 
 nuc_map = {'C': '13C', 'N': '15N', 'H': '1H', 'Q': '1H', 'M': '1H'}
 # -----------------------------------------------------------------------------  
