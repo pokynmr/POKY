@@ -82,4 +82,4 @@ for line in cs_lines:
 SavePokyResonance(poky_file, cs_list)
 s.open_notepad(poky_file)
 
-s.show_message('Done', 'You can read the generated file from Resonances tab.')
+s.show_message('Done', 'You can read the generated file from the Resonances tab.')
