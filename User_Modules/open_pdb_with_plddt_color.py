@@ -27,11 +27,11 @@ f.close()
 lines = list(filter(lambda x: x.find('ATOM') == 0 and len(x) > 65, lines))
 b_list = list(map(lambda x: x[60:66].strip(), lines))
 b_list = list(map(lambda x: float(x), b_list))
-if max(b_list) < 1:
-  cutoffs = ['0.90', '0.70', '0.50']
-else:
+if max(b_list) > 1:
   cutoffs = ['90', '70', '50']
-
+else:
+  cutoffs = ['0.90', '0.70', '0.50']
+  
 objname = os.path.splitext(os.path.basename(in_name))[0]  
 c_list = ['0x0053d7', '0x57caf9', '0xffdb12', '0xff7e45']
 cmd = f'load {in_name}; '
