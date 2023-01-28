@@ -16,7 +16,7 @@ import os
 import __main__
 s = __main__.main_session
       
-in_name = s.open_filedialog('Open PDB', 'PDB (*.pdb);; mmCIF (*.mmcif);; Any (*)', '')
+in_name = s.open_filedialog('Open PDB', 'PDB (*.pdb);; Any (*)', '')
 if in_name == '':
   raise SystemError
 
