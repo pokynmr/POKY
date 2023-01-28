@@ -10,7 +10,6 @@
 #
 #
 
-import re
 import os
 
 # POKY libraries
