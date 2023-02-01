@@ -168,5 +168,15 @@
     "author" : "Woonghee Lee",
     "image" : "",
     "update_date" : "2022-12-28"
-    }
+    },
+"17":
+    {
+    "name" : "TALOS-N Analysis",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/TALOS_N_Analysis.ipynb",
+    "description" : "POKY TALOS-N Analysis Notebook",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2023-1-31"
+    },
 }
