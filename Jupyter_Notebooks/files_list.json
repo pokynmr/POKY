@@ -178,5 +178,15 @@
     "author" : "Woonghee Lee",
     "image" : "",
     "update_date" : "2023-1-31"
-    }
+    },
+"18":
+    {
+    "name" : "CheSPI Secondary Structure Prediction",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/CheSPI_SS_prediction.ipynb",
+    "description" : "CheSPI Secondary Structure Prediction",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee and Karen Pham",
+    "image" : "",
+    "update_date" : "2023-1-31"
+    }    
 }
