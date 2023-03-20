@@ -3,7 +3,7 @@
 # selected spectrum in the project.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: April 20, 2022
+# Last update: March 20, 2023
 #
 # To run this script:
 #   In Poky Notepad,
@@ -51,9 +51,9 @@ elif transform_engine == 0:
 elif transform_engine == 1:
   #### THIS IS NMRGLUE VERSION
   import nmrglue as ng
-  dic, data = ng.sparky.read_lowmem(sp.data_path)
+  dic, data = ng.sparky.read(sp.data_path)
   new_data = np.multiply(data, factor)
-  ng.sparky.write_lowmem(new_path, dic, new_data, overwrite=True)
+  ng.sparky.write(new_path, dic, new_data, overwrite=True)
 
 if s.show_message_yes_no('Load data', 'Do you want to load the processed spectrum?'):
   s.open_spectrum(new_path)
