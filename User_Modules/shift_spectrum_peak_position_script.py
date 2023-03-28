@@ -8,7 +8,6 @@
 #
 
 # POKY libraries
-import os
 import __main__
 s = __main__.session
 
