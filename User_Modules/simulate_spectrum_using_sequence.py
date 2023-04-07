@@ -1,18 +1,18 @@
 #
 # This is an example script for simulate a spectrum using sequence.
-# It basically integrates ESMFold and UCBShift.
+# It basically integrates ESMFold and UCBShift or SHIFTX2.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: Nov. 28, 2022
+# Last update: Apr. 7, 2023
 #
 # Reference:  https://github.com/JinyuanSun/PymolFold
 #             https://github.com/THGLab/CSpred
-#
+#             https://shiftx2.ca
 # To run this script:
 #   In Poky Notepad,
 #     File -> Run Python Module
 #
-# In POKY UCBShift Client, click Check the results and Simulate butons. 
+# In POKY CSPred Client, click Check the results and Simulate butons. 
 #
 
 ######################
@@ -20,6 +20,7 @@
 ######################
 sequence = '''MQIFVKTLTG KTITLEVEPS DTIENVKAKI QDKEGIPPDQ QRLIFAGKQL
               EDGRTLSDYN IQKESTLHLV LRLRGG'''
+method = 'UCBShift' # or 'SHIFTX2'. SHIFTX2 requires POKY 021323e or newer
 ######################
 # USER PARAMETER END
 ######################
@@ -69,10 +70,13 @@ if not query_esmfold(sequence, tmp_outname):
 
 import Poky_CSpred
 try:
-  d = Poky_CSpred.show_CSpred(s)
-  d.pdb_field.set(tmp_outname)
+  if method == 'UCBShift':
+    d = Poky_CSpred.show_CSpred(s)
+  elif method == 'SHIFTX2':
+    d = Poky_CSpred.show_SHIFTXpred(s)
 except:
   s.show_message('Error', 'Update POKY. Your version is old.')
+  d.pdb_field.set(tmp_outname)
   raise SystemError
 
 if not d.submit_to_server():
