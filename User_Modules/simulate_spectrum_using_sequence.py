@@ -76,9 +76,9 @@ try:
     d = Poky_CSpred.show_SHIFTXpred(s)
 except:
   s.show_message('Error', 'Update POKY. Your version is old.')
-  d.pdb_field.set(tmp_outname)
   raise SystemError
 
+d.pdb_field.set(tmp_outname)
 if not d.submit_to_server():
   s.show_message('Error', 'POKY CSPred failed. Try later.')
   raise SystemError
