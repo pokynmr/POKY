@@ -188,5 +188,15 @@
     "author" : "Woonghee Lee and Karen Pham",
     "image" : "",
     "update_date" : "2023-1-31"
-    }    
+    },
+"19":
+    {
+    "name" : "Seq2Ensemble",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ColabOpenAWSEM.ipynb",
+    "description" : "Seq2Ensemble: A collection of Colab notebooks for generating conformational ensembles of proteins from the primary sequences.",
+    "source" : "https://potoyangroup.github.io/Seq2Ensemble/",
+    "author" : "Sedinkin et al.",
+    "image" : "",
+    "update_date" : "2023-6-7"
+    },
 }
