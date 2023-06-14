@@ -2,9 +2,9 @@
 # This is an example script to renumber the following files. 
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
-# Supported files: pdb, upl, aco, rdc, prot, str
+# Supported files: pdb, upl, aco, rdc, prot, str, seq
 #
-# Last Update: Nov 3, 2021
+# Last Update: June 14, 2023
 #
 # To run this script:
 #   In Poky Notepad,
@@ -22,10 +22,10 @@ print('------------------------------------------------------')
 #################
 import os, sys
 
-ext_list = ('pdb', 'upl', 'tbl', 'aco', 'rdc', 'prot', 'str')
+ext_list = ('pdb', 'upl', 'tbl', 'aco', 'rdc', 'prot', 'str', 'seq')
 desc_list = ('PDB coordinate file', 'DIANA upper limit file', 'XPLOR TBL file',
             'DIANA angle constraint file', 'DIANA residual dipolar coupling file',
-            'XEASY PROT chemical shift file', 'BMRB NMR-STAR file')
+            'XEASY PROT chemical shift file', 'BMRB NMR-STAR file', 'SEQ file')
 extfilter = 'Any (*)'
 
 for i in range(len(ext_list)):
@@ -188,6 +188,15 @@ elif file_ext == 'str':
       seqnum3 = '%3d' % (nseqnum3)
       seqnum4 = '%3d' % (nseqnum4)      
       line2 = line[0:8] + seqnum3 + line[11:13] + seqnum4 + line[16:]
+      content = content + line2
+    except:
+      content = content + line
+elif file_ext == 'seq':
+  for line in lines:
+    try:
+      sp_list = line.strip().split()
+      nseq = int(sp_list[1])+diff
+      line2 = '%6s %6d\n' % (sp_list[0], nseq)
       content = content + line2
     except:
       content = content + line
