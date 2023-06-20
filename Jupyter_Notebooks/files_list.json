@@ -198,5 +198,15 @@
     "author" : "Sedinkin et al.",
     "image" : "",
     "update_date" : "2023-6-7"
+    },
+"20":
+    {
+    "name" : "XEASY2UCSF",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/XEASY2UCSF.ipynb",
+    "description" : "XEASY2UCSF: Convert XEASY spectrum to UCSF spectrum.",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2023-6-20"
     }
 }
