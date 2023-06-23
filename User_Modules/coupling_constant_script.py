@@ -1,6 +1,7 @@
 #
 # This is an example script to calculate coupling constants in a spectrum.
 # You must have a pair of same assignment in the spectrum.
+# If you need to subtract signals, consider using "concatenate_spectra_script" first.
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
 # To run this script:
