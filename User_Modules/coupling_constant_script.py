@@ -15,7 +15,6 @@ spec_name = s.show_spectrumselectiondialog('Select a spectrum', 0)
 if spec_name == '':
   raise SystemExit    
 
-# spectrum to be simulated
 from sputil import name_to_spectrum
 spec = name_to_spectrum(spec_name, s)
 if spec == None:
