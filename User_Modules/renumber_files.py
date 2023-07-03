@@ -2,9 +2,9 @@
 # This is an example script to renumber the following files. 
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
-# Supported files: pdb, upl, aco, rdc, prot, str, seq
+# Supported files: pdb, upl, aco, rdc, prot, str, seq, list
 #
-# Last Update: June 14, 2023
+# Last Update: July 3, 2023
 #
 # To run this script:
 #   In Poky Notepad,
@@ -20,12 +20,14 @@ print('Department of Chemistry, University of Colorado Denver')
 print('------------------------------------------------------')
 
 #################
-import os, sys
+import os, re
+from sputil import parse_assignment_entirely, group_atom_assignment_name
 
-ext_list = ('pdb', 'upl', 'tbl', 'aco', 'rdc', 'prot', 'str', 'seq')
+ext_list = ('pdb', 'upl', 'tbl', 'aco', 'rdc', 'prot', 'str', 'seq', 'list')
 desc_list = ('PDB coordinate file', 'DIANA upper limit file', 'XPLOR TBL file',
             'DIANA angle constraint file', 'DIANA residual dipolar coupling file',
-            'XEASY PROT chemical shift file', 'BMRB NMR-STAR file', 'SEQ file')
+            'XEASY PROT chemical shift file', 'BMRB NMR-STAR file', 'SEQ file',
+            'POKY list file')
 extfilter = 'Any (*)'
 
 for i in range(len(ext_list)):
@@ -42,6 +44,7 @@ try:
 except:
   s.show_message('Error', 'Not supported file type.')
   raise SystemExit
+print(f'{file_ext} file.')
 
 output_file = s.save_filedialog('Select a file to write', 
   f'{desc_list[ext_idx]} (*.{ext_list[ext_idx]})', os.path.dirname(input_file))
@@ -54,6 +57,9 @@ try:
   diff = int(d)
 except:
   raise SystemExit
+
+
+print(f'Differential: {d}.')
 
 if diff == 0 or abs(diff) > 999:
   raise SystemExit
@@ -191,6 +197,7 @@ elif file_ext == 'str':
       content = content + line2
     except:
       content = content + line
+# Three-letter sequence file 
 elif file_ext == 'seq':
   for line in lines:
     try:
@@ -200,6 +207,61 @@ elif file_ext == 'seq':
       content = content + line2
     except:
       content = content + line
+# POKY list
+elif file_ext == 'list':
+  # check resonance list or peak list
+  dim_check = [0, 0, 0, 0, 0]
+  for i in range(len(lines)):
+    line = lines[i]
+    sp_list = line.split()
+    if len(sp_list) < 2:
+      continue
+    dim = len(sp_list[0].split('-'))
+    dim_check[dim] += 1
+  max_dim = dim_check.index(max(dim_check))
+  print(f'Filetype code:  {max_dim}')
+  
+  # Resonance
+  if max_dim == 1:
+    for line in lines:
+      num_list = re.findall('\d+', line)
+      if len(num_list) == 0:
+        content = content + line
+        continue
+      try:
+        nseq = int(num_list[0]) + diff
+        newline = line.replace(num_list[0], str(nseq), 1)
+        content = content + newline
+      except:
+        content = content + line
+        continue
+  # Peak list
+  else:
+    for line in lines:
+      sp_list = line.split()
+      print(sp_list)
+      try:
+        tasn = parse_assignment_entirely(sp_list[0])
+        print(tasn)
+        if len(tasn) != max_dim:
+          content = content + line
+          print(1)
+          continue
+        lasn = list(map(list, tasn))
+        asgn = ''
+        for i in range(len(lasn)):
+          print(1.1)
+          lasn[i][1] += diff
+          asgn += f'{lasn[i][0]}{lasn[i][1]}{lasn[i][2]}-'
+        asgn = asgn[:-1]
+        print((sp_list[0], asgn))
+        new_line = line.replace(sp_list[0], asgn, 1)
+        print(5)
+        content = content + new_line
+      except:
+        content = content + line
+        print(0)
+        continue
 
 f = open(output_file, 'w')
 f.write(content)
