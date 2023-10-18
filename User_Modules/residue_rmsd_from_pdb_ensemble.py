@@ -46,7 +46,7 @@ import numpy as np
 
 print('\n\n* POKY ENSEMBLE RESIDUE RMSD')
 print('* PDB FILE: ' + in_file)
-print('   RESIDUE    BB RMSD MEAN    BB RMSD STD    HA RMSD MEAN    HA RMSD STD')
+print('   RESIDUE    BB_RMSD_MEAN    BB_RMSD_STD    HA_RMSD_MEAN    HA_RMSD_STD')
 
 for i in range(len(residues)):
   bb_rmsd_mean = np.mean(bb_rmsds[i])
