@@ -1,5 +1,5 @@
 #
-# This is an example script to calculate BB & HA RMSD from a PDB ensemble file.
+# This is an example script to calculate BB & HA RMSD from PDB ensemble file.
 # This script runs on POKY BUILD 02/06/21e or newer
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
@@ -12,7 +12,7 @@ import __main__
 s = __main__.main_session
 
 in_file = s.open_filedialog('Select the PDB ensemble file', 
-                            'Any (*);; mmCIF (*.cif);; PDB (*.pdb)', '')
+                            'PDB (*.pdb);; mmCIF (*.cif);; Any (*)', '')
 if in_file == '':
   raise SystemExit
 
@@ -28,6 +28,7 @@ ordered = oreg.replace('+', ', ')   # more common in papers
 
 from pymol import cmd
 
+cmd.delete('for_rmsd')
 cmd.load(in_file, 'for_rmsd')
 nmodel = cmd.count_states('for_rmsd')
 cmd.split_states('for_rmsd')
@@ -56,7 +57,7 @@ ha_rmsd_std = np.std(ha_rmsds)
 
 print('\n\n* POKY ENSEMBLE RMSD')
 print('* PDB FILE: ' + in_file)
-print('* Ordered residues: ' + ordered)
+print('* Ordered residues by CYRANGE: ' + ordered)
 print('MODEL        BB RMSD  HA RMSD')
 
 for i in range(2, nmodel+1):
@@ -75,3 +76,5 @@ if s.show_message_yes_no('Save', 'Do you want to save the superimposed structure
   cmd.intra_fit('for_rmsd & i. %s & n. N*+C*+O*+S*' % (oreg))
   cmd.save(out_path, 'for_rmsd', state=0)
   s.show_message('Finished', 'Finished.')
+
+cmd.delete('for_rmsd*')
