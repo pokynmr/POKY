@@ -62,6 +62,7 @@ if not query_esmfold(sequence, tmp_outname):
   raise SystemError
 
 from pymol import cmd
+cmd.delete('dt_neighbor')
 cmd.load(tmp_outname, 'dt_neighbor')
 nmodel = cmd.count_states('dt_neighbor')
 cmd.do('h_add dt_neighbor & name N')
@@ -90,6 +91,8 @@ for i in range(nmin, nmax):
 
 msg = 'Select the contact distance cutoff in Angstrom (e.g. 5)'
 cutoff = float(s.show_inputdialog('Distance cutoff', msg, '5'))
+
+cmd.delete('dt_neighbor')
 
 if cutoff == '':
   raise SystemError

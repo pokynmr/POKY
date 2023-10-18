@@ -18,6 +18,7 @@ Created on Wed Dec 21 13:25:26 2022
 poky_qmmm='''
 import os
 from pymol import cmd
+cmd.delete('pdb_place_holder')
 cmd.load('pdb_place_holder')
 
 def find_serial_number(object_name, cap=False):

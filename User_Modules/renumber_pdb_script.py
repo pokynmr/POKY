@@ -26,8 +26,10 @@ except:
   raise SystemExit
 
 from pymol import cmd
+cmd.delete('for_renumber')
 cmd.load(input_file, 'for_renumber')
 cmd.alter('for_renumber', 'resi=str(int(resi)+%d)' % (offset))
 cmd.save(output_file, 'for_renumber', state=0)
+cmd.delete('for_renumber')
 
 s.show_message('Finished', 'Finished.')

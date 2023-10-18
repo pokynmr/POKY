@@ -8,13 +8,13 @@
 #     File -> Run Python Module
 #
 # Using Sven Hyberts 1992 paper (doi: 10.1002/pro.5560010606)
-#  PHI/PSI deviation over 24 degree might be "not well defined." (S < 0.9)
+#  PHI/PSI deviation over 24 degree might be not well defined. (S < 0.9)
 
 import __main__
 s = __main__.main_session
 
 in_file = s.open_filedialog('Select the PDB ensemble file', 
-                            'Any (*);; mmCIF (*.cif);; PDB (*.pdb)', '')
+                            'mmCIF (*.cif);; PDB (*.pdb);; Any (*)', '')
 if in_file == '':
   raise SystemExit
 
@@ -24,6 +24,7 @@ if not os.path.exists(in_file):
 
 from pymol import cmd
 
+cmd.delete('for_region')
 cmd.load(in_file, 'for_region')
 nmodel = cmd.count_states('for_region')
 cmd.split_states('for_region')
@@ -87,3 +88,4 @@ for k,g in groupby(enumerate(olist),lambda x:x[0]-x[1]):
   else:
     ranges += '%d+' % (group[0])
 print('Ordered regions: ' + ranges[:-1])
+cmd.delete('for_region*')

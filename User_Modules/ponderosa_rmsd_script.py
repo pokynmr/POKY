@@ -33,6 +33,7 @@ ordered = oreg.replace('+', ', ')   # more common in papers
 
 from pymol import cmd
 
+cmd.delete('for_rmsd')
 cmd.load(pdbpath, 'for_rmsd')
 cmd.split_states('for_rmsd')
 
@@ -79,3 +80,5 @@ if s.show_message_yes_no('Save', 'Do you want to save the superimposed structure
   cmd.intra_fit('for_rmsd & i. %s & n. N*+C*+O*+S*' % (oreg))
   cmd.save(out_path, 'for_rmsd', state=0)
   s.show_message('Finished', 'Finished.')
+
+cmd.delete('for_rmsd*')

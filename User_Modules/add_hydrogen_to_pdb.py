@@ -13,7 +13,7 @@ import __main__
 s = __main__.main_session
 
 in_file = s.open_filedialog('Select the PDB ensemble file', 
-                            'Any (*);; mmCIF (*.cif);; PDB (*.pdb)', '')
+                            'mmCIF (*.cif);; PDB (*.pdb);; Any (*)', '')
 if in_file == '':
   raise SystemExit
 
@@ -22,10 +22,12 @@ if out_file == '':
   raise SystemExit
 
 from pymol import cmd
+cmd.delete('for_hydrogen')
 cmd.load(in_file, 'for_hydrogen')
 cmd.do('remove not name N*+C*+O*+S*')
 cmd.do('h_add for_hydrogen')
 cmd.do('save ' + out_file)
+cmd.delete('for_hydrogen')
 
 # rename protons
 from myseq import AAA_dict, A_dict, aaa2a
