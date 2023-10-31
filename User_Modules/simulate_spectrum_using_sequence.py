@@ -44,7 +44,7 @@ def query_esmfold(seq, outname):
   }
 
   response = requests.post('https://api.esmatlas.com/foldSequence/v1/pdb/', 
-                            headers=headers, data=seq)
+                            headers=headers, data=seq, verify=False)
   
   pdb_string = response.content.decode('utf-8')
   if pdb_string.startswith("HEADER"):
@@ -76,9 +76,9 @@ try:
     d = Poky_CSpred.show_SHIFTXpred(s)
 except:
   s.show_message('Error', 'Update POKY. Your version is old.')
+  d.pdb_field.set(tmp_outname)
   raise SystemError
 
-d.pdb_field.set(tmp_outname)
 if not d.submit_to_server():
   s.show_message('Error', 'POKY CSPred failed. Try later.')
   raise SystemError

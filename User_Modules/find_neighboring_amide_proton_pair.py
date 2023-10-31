@@ -37,7 +37,7 @@ def query_esmfold(seq, outname):
   }
 
   response = requests.post('https://api.esmatlas.com/foldSequence/v1/pdb/', 
-                            headers=headers, data=seq)
+                            headers=headers, data=seq, verify=False)
   
   pdb_string = response.content.decode('utf-8')
   if pdb_string.startswith("HEADER"):

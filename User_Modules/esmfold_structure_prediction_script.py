@@ -1,17 +1,14 @@
 #
-# This is an example script for running esmfold and opening in PyMOL.
+# This is an example script for running esmfold and openning in PyMOL.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: Nov. 23, 2022
+# Last update: Nov. 8, 2022
 #
 # Reference: https://github.com/JinyuanSun/PymolFold
 #
 # To run this script:
 #   In Poky Notepad,
 #     File -> Run Python Module
-#
-# For Multimer Calculation:
-#   Use Colab version from POKY Notebooks (two-letter-code PN or File Menu) 
 #
 
 ######################
@@ -44,7 +41,7 @@ def query_esmfold(seq, outname):
   }
 
   response = requests.post('https://api.esmatlas.com/foldSequence/v1/pdb/', 
-                            headers=headers, data=seq)
+                            headers=headers, data=seq, verify=False)
   
   pdb_string = response.content.decode('utf-8')
   if pdb_string.startswith("HEADER"):
