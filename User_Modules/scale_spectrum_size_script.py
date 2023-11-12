@@ -48,6 +48,7 @@ dic, data = ng.sparky.read(sp.data_path)
 zoom_list = []
 for i in range(sp.dimension):
   dic['w' + str(i+1)]['npoints'] = new_size_list[i]
+  dic['w' + str(i+1)]['size'] = new_size_list[i]
   zoom_list.append(new_size_list[i] / sp.data_size[i])
 
 new_data = scipy.ndimage.zoom(data, zoom_list, mode='nearest')
