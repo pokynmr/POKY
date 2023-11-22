@@ -1,6 +1,5 @@
 #
 # This is an example script to make peak labels from assignments.
-#   This only works on selected peaks.
 #
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
 #
