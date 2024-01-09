@@ -77,9 +77,19 @@
     "source" : "https://github.com/sokrypton/ColabFold",
     "author" : "Minkyung et al.",
     "image" : "",
-    "update_date" : "2022-01-05"
+    "update_date" : "2024-01-09"
     },
 "8":
+    {
+    "name" : "RoseTTAFold2",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/RoseTTAFold2.ipynb",
+    "description" : "RoseTTAFold: Accurate prediction of protein structures and interactions using a three-track neural network.",
+    "source" : "https://github.com/sokrypton/ColabFold",
+    "author" : "Minkyung et al.",
+    "image" : "",
+    "update_date" : "2024-01-09"
+    },
+"9":
     {
     "name" : "AlphaFold complexes",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_complexes.ipynb",
@@ -89,7 +99,7 @@
     "image" : "",
     "update_date" : "2022-01-05"
     },
-"9":
+"10":
     {
     "name" : "AlphaFold2 mmseqs2",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_mmseqs2.ipynb",
@@ -99,7 +109,7 @@
     "image" : "",
     "update_date" : "2022-01-05"
     },
-"10":
+"11":
     {
     "name" : "AlphaFold2 batch",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_batch.ipynb",
@@ -109,7 +119,7 @@
     "image" : "",
     "update_date" : "2022-01-05"
     },
-"11":
+"12":
     {
     "name" : "AlphaFold2 advanced",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_advanced.ipynb",
@@ -117,9 +127,9 @@
     "source" : "https://github.com/sokrypton/ColabFold",
     "author" : "Mirdita et al.",
     "image" : "",
-    "update_date" : "2022-01-05"
+    "update_date" : "2024-01-09"
     },
-"12":
+"13":
     {
     "name" : "Rapid protein stability prediction",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/RaSPLab.ipynb",
@@ -129,7 +139,7 @@
     "image" : "",
     "update_date" : "2022-08-01"
     },
-"13":
+"14":
     {
     "name" : "ESMFold",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ESMFold.ipynb",
@@ -137,9 +147,9 @@
     "source" : "https://github.com/sokrypton/ColabFold",
     "author" : "S. Ovchinnikov",
     "image" : "",
-    "update_date" : "2022-11-23"
+    "update_date" : "2024-01-09"
     },
-"14":
+"15":
     {
     "name" : "Nucleotide Molecular Weight Calculator",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/nucleotide_molecular_weight.ipynb",
@@ -149,7 +159,7 @@
     "image" : "",
     "update_date" : "2022-11-27"
     },
-"15":
+"16":
     {
     "name" : "Amino Acid Molecular Weight Calculator",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/amino_acid_molecular_weight.ipynb",
@@ -159,7 +169,7 @@
     "image" : "",
     "update_date" : "2022-11-27"
     },
-"16":
+"17":
     {
     "name" : "Model-Free Analysis",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ModelFreeAnalysis.ipynb",
@@ -169,7 +179,7 @@
     "image" : "",
     "update_date" : "2022-12-28"
     },
-"17":
+"18":
     {
     "name" : "TALOS-N Analysis",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/TALOS_N_Analysis.ipynb",
@@ -179,7 +189,7 @@
     "image" : "",
     "update_date" : "2023-1-31"
     },
-"18":
+"19":
     {
     "name" : "CheSPI Secondary Structure Prediction",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/CheSPI_SS_prediction.ipynb",
@@ -189,7 +199,7 @@
     "image" : "",
     "update_date" : "2023-1-31"
     },
-"19":
+"20":
     {
     "name" : "Seq2Ensemble",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ColabOpenAWSEM.ipynb",
@@ -199,7 +209,7 @@
     "image" : "",
     "update_date" : "2023-6-7"
     },
-"20":
+"21":
     {
     "name" : "XEASY2UCSF",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/XEASY2UCSF.ipynb",
