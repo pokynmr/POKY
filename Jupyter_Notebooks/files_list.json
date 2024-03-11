@@ -101,23 +101,23 @@
     },
 "10":
     {
-    "name" : "AlphaFold2 mmseqs2 v1.5.5",
+    "name" : "AlphaFold2 mmseqs2 v1.5.2",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2_mmseqs2.ipynb",
     "description" : "Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer.",
     "source" : "https://github.com/sokrypton/ColabFold",
     "author" : "Mirdita et al.",
     "image" : "",
-    "update_date" : "2022-01-05"
+    "update_date" : "2024-01-09"
     },
 "11":
     {
-    "name" : "AlphaFold2 mmseqs2 v1.5.2",
+    "name" : "AlphaFold2 mmseqs2 v1.5.5",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AlphaFold2.ipynb",
     "description" : "Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer.",
     "source" : "https://github.com/sokrypton/ColabFold",
     "author" : "Mirdita et al.",
     "image" : "",
-    "update_date" : "2024-01-09"
+    "update_date" : "2022-01-05"
     },
 "12":
     {
