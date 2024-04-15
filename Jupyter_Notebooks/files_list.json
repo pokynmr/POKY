@@ -228,5 +228,15 @@
     "author" : "Woonghee Lee",
     "image" : "",
     "update_date" : "2023-6-20"
+    },
+"23":
+    {
+    "name" : "SSDraw",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/SSDraw.ipynb",
+    "description" : "SSDraw is a program that generates publication-quality protein secondary structure diagrams from three-dimensional protein structures.",
+    "source" : "https://github.com/ncbi/SSDraw",
+    "author" : "NCBI",
+    "image" : "",
+    "update_date" : "2024-4-15"
     }
 }
