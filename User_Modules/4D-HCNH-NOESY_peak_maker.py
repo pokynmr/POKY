@@ -89,8 +89,6 @@ if pt_mode == 'Through-Space':
   except:
     s.show_message('Error', 'Please type a number.')
     raise SystemExit
-  #from pokydihe import read_pdb
-  #model_list = read_pdb(pdb_file)
   from pymol import cmd
   cmd.delete('hcnh')
   cmd.load(pdb_file, 'hcnh')
@@ -207,12 +205,6 @@ def GetShift(i, atm):
   return ga, cs
 
 def GetDistance(i1, atm1, i2, atm2):
-  #if atm1 != 'H':
-  #  atm1 += '*'
-  #if atm2 != 'H':
-  #  atm2 += '*'
-  #dist = cmd.distance(None, f'(/hcnh///{i1}/{atm1})', 
-  #                 f'(/hcnh///{i2}/{atm2})', state=1)  
   try:
     atm1_list = protein_pseudo_atoms[sequence[i1-first_seqidx]][atm1]
   except:
@@ -224,22 +216,12 @@ def GetDistance(i1, atm1, i2, atm2):
 
   dist = 10**10
   for at1 in atm1_list:
-    #try:
-      #x1, y1, z1 = model_list[0][f'{i1}_A_{at1}'][5:8]
-    #except:
-    #  continue
     for at2 in atm2_list:
-      #try:
-      #  x2, y2, z2 = model_list[0][f'{i2}_A_{at2}'][5:8]
-      #except:
-      #  continue
       try:
         tmp = cmd.get_distance(f'(/hcnh///{i1}/{at1})', 
                           f'(/hcnh///{i2}/{at2})')
       except:
         continue
-      
-      #dist = min(dist, sqrt((x1-x2)**2+(y1-y2)**2+(z1-z2)**2))
       dist = min(dist, tmp)
   return dist
 
