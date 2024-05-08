@@ -52,7 +52,7 @@ if spec == None:
   raise SystemExit
 
 if not (spec.nuclei == ('HC', 'C', 'N', 'HN') or \
-        ''.join(sorted(spec.nuclei)) != '13C15N1H1H':
+        ''.join(sorted(spec.nuclei)) != '13C15N1H1H'):
   s.show_message('Error', 'Please choose a 4D-HCNH spectrum.')
   raise SystemExit
 
