@@ -6,6 +6,7 @@
 # "_s" tags can be removed by "ut" (untag _s) or "cu" (untag _s and center) 
 #
 # by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
+#     Thomas Evangelidis's suggested edits (axis order) incorporated (05/08/24) 
 #
 # To run this script:
 #   In Poky Notepad,
@@ -50,15 +51,16 @@ if spec == None:
   s.show_message('Error', 'Spectrum is not set properly.')
   raise SystemExit
 
-if ''.join(sorted(spec.nuclei)) != '13C15N1H1H':
+if not (spec.nuclei == ('HC', 'C', 'N', 'HN') or \
+        ''.join(sorted(spec.nuclei)) != '13C15N1H1H':
   s.show_message('Error', 'Please choose a 4D-HCNH spectrum.')
   raise SystemExit
 
 # determine axis order
 try:
-  C_idx = spec.nuclei.index('13C')
-  N_idx = spec.nuclei.index('15N')
-  H_idx = spec.nuclei.index('1H')
+  C_idx = [i for i, n in enumerate(spec.nuclei) if 'H' not in n and 'C' in n][0]
+  N_idx = [i for i, n in enumerate(spec.nuclei) if 'H' not in n and 'N' in n][0]
+  H_idx = [i for i, n in enumerate(spec.nuclei) if 'H' in n][0]
 except:
   s.show_message('Error', 'Please choose a 4D-HCNH spectrum.')
   raise SystemExit
@@ -287,6 +289,7 @@ for i in range(len(sequence)):
 axis_order = [N_idx, HN_idx, C_idx, HC_idx]
 for gas, freqs in peak_list:
   gas2, freqs2 = list(gas), list(freqs)
+  print(f"Creating peak with label {gas2} as position {freqs2}")
   for i in range(spec.dimension):
     # Use N_idx, HN_idx, C_idx, HC_idx 
     gas2[axis_order[i]], freqs2[axis_order[i]] = \
