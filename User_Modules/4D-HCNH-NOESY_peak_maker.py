@@ -190,7 +190,7 @@ def GetShift(i, atm):
   
   pcs = get_pacsy_freq(a, atm, ap, an)
   cs = get_freq_from_dict(cs_dict, ga)
-  ucs = get_user_freq(g, nx)
+  ucs = get_user_freq(g, atm)
 
   if cs == None and pcs < 500 and idx == 0: 
     cs = pcs
@@ -299,7 +299,7 @@ for gas, freqs in peak_list:
 
   # alias if edge of the spectrum
   freqs3 = alias_onto_spectrum(freqs2, spec)
-  if freqs2 != freqs3:
+  if tuple(freqs2) != freqs3:
     peak.position = freqs3
     peak.alias = subtract_tuples(freqs2, freqs3)
 
