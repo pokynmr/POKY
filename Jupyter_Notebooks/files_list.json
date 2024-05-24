@@ -238,5 +238,15 @@
     "author" : "NCBI",
     "image" : "",
     "update_date" : "2024-4-15"
+    },
+"24":
+    {
+    "name" : "OpenFold",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/OpenFold.ipynb",
+    "description" : "A faithful but trainable PyTorch reproduction of DeepMind's AlphaFold 2.",
+    "source" : "https://github.com/aqlaboratory/openfold",
+    "author" : "AlQuraishi Laboratory",
+    "image" : "",
+    "update_date" : "2024-5-24"
     }
 }
