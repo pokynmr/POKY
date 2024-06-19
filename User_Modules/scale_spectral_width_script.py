@@ -12,7 +12,6 @@
 #
 #
 
-import numpy as np
 import nmrglue as ng
 from sputil import name_to_spectrum
 
