@@ -106,7 +106,7 @@ xlabel = 'Residue Number'
 ylabel = 'd(dCA-dCB) (ppm)'
 plt.figure()
 
-plt.bar(x_list_h, y_list_h, color = 'red')
+plt.bar(x_list_h, y_list_h, color = 'green')
 plt.bar(x_list_e, y_list_e, color = 'blue')
 
 plt.xlabel(xlabel)
