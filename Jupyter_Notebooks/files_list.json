@@ -248,5 +248,15 @@
     "author" : "AlQuraishi Laboratory",
     "image" : "",
     "update_date" : "2024-5-24"
+    },
+"25":
+    {
+    "name" : "EvoBind",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/EvoBind.ipynb",
+    "description" : "EvoBind: in silico directed evolution of peptide binders with AlphaFold.",
+    "source" : "https://github.com/patrickbryant1/EvoBind",
+    "author" : "Patrick Bryant Laboratory",
+    "image" : "",
+    "update_date" : "2024-7-10"
     }
 }
