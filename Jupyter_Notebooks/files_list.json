@@ -258,5 +258,15 @@
     "author" : "Patrick Bryant Laboratory",
     "image" : "",
     "update_date" : "2024-7-10"
+    },
+"26":
+    {
+    "name" : "PCA with FDA drugs",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/PCA_with_FDA_drugs.ipynb",
+    "description" : "Run PCA your molecule with FDA approved drugs.",
+    "source" : "https://github.com/pokyNMR/POKY",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2024-8-1"
     }
 }
