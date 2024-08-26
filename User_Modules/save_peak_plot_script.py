@@ -153,5 +153,7 @@ for i in range(len(s.selected_peaks())):
   fig.set_figheight(hi)
   filename = os.path.join(save_dir, peak.assignment + f'.{fileext}')
   plt.savefig(filename)
+  fig.clear()
+  plt.close(fig)
 
 s.show_message('Done', 'Saving completed.')
