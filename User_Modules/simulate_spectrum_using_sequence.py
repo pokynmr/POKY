@@ -74,9 +74,9 @@ try:
     d = Poky_CSpred.show_CSpred(s)
   elif method == 'SHIFTX2':
     d = Poky_CSpred.show_SHIFTXpred(s)
+  d.pdb_field.set(tmp_outname)
 except:
   s.show_message('Error', 'Update POKY. Your version is old.')
-  d.pdb_field.set(tmp_outname)
   raise SystemError
 
 if not d.submit_to_server():
