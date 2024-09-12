@@ -268,5 +268,15 @@
     "author" : "Woonghee Lee",
     "image" : "",
     "update_date" : "2024-8-1"
+    },
+"27":
+    {
+    "name" : "Cfold",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/Cfold.ipynb",
+    "description" : "Run PCA your molecule with FDA approved drugs.",
+    "source" : "https://github.com/patrickbryant1/Cfold",
+    "author" : "Patrick Bryant",
+    "image" : "",
+    "update_date" : "2024-9-12"
     }
 }
