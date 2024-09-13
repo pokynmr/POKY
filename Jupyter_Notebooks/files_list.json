@@ -273,10 +273,20 @@
     {
     "name" : "Cfold",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/Cfold.ipynb",
-    "description" : "Run PCA your molecule with FDA approved drugs.",
+    "description" : "Structure prediction of alternative protein conformations.",
     "source" : "https://github.com/patrickbryant1/Cfold",
     "author" : "Patrick Bryant",
     "image" : "",
     "update_date" : "2024-9-12"
+    },
+"28":
+    {
+    "name" : "AF-Cluster",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/AF_cluster_in_colabdesign.ipynb",
+    "description" : "Predict multiple protein conformations using sequence clustering and AlphaFold2.",
+    "source" : "https://github.com/HWaymentSteele/AF_Cluster",
+    "author" : "Hannah Wayment-Steele",
+    "image" : "",
+    "update_date" : "2024-9-13"
     }
 }
