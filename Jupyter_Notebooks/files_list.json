@@ -288,5 +288,15 @@
     "author" : "Hannah Wayment-Steele",
     "image" : "",
     "update_date" : "2024-9-13"
-    }
+    },
+"29":
+    {
+    "name" : "BindCraft",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/BindCraft.ipynb",
+    "description" : "BindCraft: one-shot design of functional protein binders.",
+    "source" : "https://github.com/martinpacesa/BindCraft",
+    "author" : "Martin Pacesa",
+    "image" : "",
+    "update_date" : "2024-10-2"
+    }    
 }
