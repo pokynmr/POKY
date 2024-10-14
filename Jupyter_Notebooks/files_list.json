@@ -298,5 +298,15 @@
     "author" : "Martin Pacesa",
     "image" : "",
     "update_date" : "2024-10-2"
-    }    
+    },
+"30":
+    {
+    "name" : "PDB2VOL simulation",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/PDB2VOL.ipynb",
+    "description" : "Electron density map simulation using a PDB file via PDB2VOL from SITUS.",
+    "source" : "https://github.com/pokynmr",
+    "author" : "Woonghee Lee",
+    "image" : "",
+    "update_date" : "2024-10-14"
+    }        
 }
