@@ -40,5 +40,3 @@ f.write(content)
 f.close()
 
 s.show_message('Saved.', 'Migration completed in ' + out_file)
-ATOM      1  N   LEU     1     -12.048   2.307 -10.659  1.00  0.00      A
-ATOM      1  N   LEU A   1      -9.491   1.493 -11.601  1.00  0.00      A
