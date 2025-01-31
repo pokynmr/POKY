@@ -33,7 +33,7 @@ for line in lines:
   if len(line) < 74:
     content += line
     continue
-  line = line[:22] + line[72] + line[23:]
+  line = line[:21] + line[72] + line[22:]
   content += line
 f = open(out_file, 'w')
 f.write(content)
