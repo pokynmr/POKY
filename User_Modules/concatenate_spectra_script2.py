@@ -16,7 +16,7 @@
 # If you wish to use different scale, you can modify "factor" down there.
 #
 # Developed by Woonghee Lee, Ph.D. (woonghee.lee@ucdenver.edu)
-# Last update: Oct. 20, 2022
+# Last update: Jan. 12, 2025
 #
 # To run this script:
 #   In Poky Notepad,
@@ -49,6 +49,12 @@ if sp.nuclei != sp2.nuclei:
   s.show_message('Error', 'Dimension orders are not the same.')
   raise SystemError
 
+add_subtract = s.show_selectiondialog('Add or subtract', 
+                                      'Do you want to add or subtract?',
+                                      ('Add', 'Subtract', 'Cancel'))
+if add_subtract in [-1, 2]:
+  raise SystemError
+
 # I think we don't need this for now.
 #scale_offset = np.array(sp.scale_offset) - np.array(sp2.scale_offset)
 
@@ -61,6 +67,8 @@ if new_path == '':
 # We will match scale factor by comparing noise level.
 # You can manually adjust if you want something else.
 factor = sp.noise / sp2.noise
+if add_subtract == 1:
+  factor = factor * -1.
 
 proj = s.project
 
