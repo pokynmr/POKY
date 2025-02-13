@@ -12,11 +12,11 @@
 
 import __main__
 s = __main__.main_session
-in_file = s.open_filedialog('message', 'Any (*);; PDB file (*.pdb);;', '')
+in_file = s.open_filedialog('message', 'Any (*);; PDB file (*.pdb)', '')
 if in_file == '':
   raise SystemError
 
-out_file = s.save_filedialog('message', 'Any (*);; PDB file (*.pdb);;', '')
+out_file = s.save_filedialog('message', 'Any (*);; PDB file (*.pdb)', '')
 if out_file == '':
   raise SystemError
 
