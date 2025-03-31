@@ -313,10 +313,20 @@
     {
     "name" : "NuFold RNA structure prediction",
     "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/ColabNuFold.ipynb",
-    "description" : "NuFold is a state-of-the-art method designed for predicting 3D RNA structures, leveraging deep learning for high accuracy and reliability. This tool is particularly useful for biologists and bioinformatics researchers focusing on RNA function and structure..",
+    "description" : "NuFold is a state-of-the-art method designed for predicting 3D RNA structures, leveraging deep learning for high accuracy and reliability. This tool is particularly useful for biologists and bioinformatics researchers focusing on RNA function and structure.",
     "source" : "https://github.com/kiharalab/nufold",
     "author" : "Daisuke Kihara",
     "image" : "",
     "update_date" : "2025-03-13"
+    },
+"32":
+    {
+    "name" : "Biomolecular Emulator (BioEmu)",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/BioEmu.ipynb",
+    "description" : "BioEmu is a framework for emulating biomolecular dynamics and integrating structural prediction tools to accelerate research in structural biology and protein engineering. This notebook uses BioEmu with ColabFold to generate the MSA and identify cluster conformations using Foldseek.",
+    "source" : "https://github.com/microsoft/bioemu",
+    "author" : "Sarah Lewis et al.",
+    "image" : "",
+    "update_date" : "2025-03-31"
     }
 }
