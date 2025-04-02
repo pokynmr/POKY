@@ -328,5 +328,16 @@
     "author" : "Sarah Lewis et al.",
     "image" : "",
     "update_date" : "2025-03-31"
+    },
+
+"33":
+    {
+    "name" : "CatPred: DL In Vitro Enzyme Kinetic Parameter Prediction",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/CatPred.ipynb",
+    "description" : "CatPred, a deep learning framework for predicting in vitro enzyme kinetic parameters, including turnover numbers (kcat), Michaelis constants (Km), and inhibition constants (Ki).",
+    "source" : "https://github.com/maranasgroup/CatPred",
+    "author" : "Veda Sheersh Boorla and Costas D. Maranas",
+    "image" : "",
+    "update_date" : "2025-03-31"
     }
 }
