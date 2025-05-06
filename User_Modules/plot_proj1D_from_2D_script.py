@@ -34,14 +34,14 @@ nucleus = spec.nuclei[dim]
 npoint = spec.data_size[dim]
 vnpoint = int((vregion[1][dim] - vregion[0][dim]) / \
           (region[1][dim] - region[0][dim]) * npoint + 0.5)
-ppm_per_pt = spec.spectrum_width[dim] / (npoint - 1)
+ppm_per_pt = spec.spectrum_width[dim] / npoint
 
 # dim 2
 nucleus2 = spec.nuclei[dim2]
 npoint2 = spec.data_size[dim2]
 vnpoint2 = int((vregion[1][dim2] - vregion[0][dim2]) / \
           (region[1][dim2] - region[0][dim2]) * npoint2 + 0.5)
-ppm_per_pt2 = spec.spectrum_width[dim2] / (npoint2 - 1)
+ppm_per_pt2 = spec.spectrum_width[dim2] / npoint2
 
 xdata = np.array(list(map(lambda x: vregion[1][dim] - ppm_per_pt * x,
                                   range(vnpoint))))
