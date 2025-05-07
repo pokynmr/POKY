@@ -47,15 +47,13 @@ ydata = np.array(list(map(lambda x: region[1][dim2] - ppm_per_pt2 * x,
                                   range(npoint2))))
 
 # intensity
-idata2d = np.zeros((npoint, npoint2))
-for i in range(npoint):
-  for j in range(npoint2):
-    idata2d[i, j] = spec.data_height((xdata[i], ydata[j]))
-
-# sum along axis
-idata = np.sum(idata2d, axis=1)
-idata2 = np.sum(idata2d, axis=0)
-
+idata = [0.,] * npoint
+idata2 = [0.,] * npoint2
+idata = list(map(lambda x: spec.data_height((xdata[x], peak.frequency[1])), 
+                 range(npoint)))
+idata2 = list(map(lambda x: spec.data_height((peak.frequency[0], ydata[x])), 
+                 range(npoint2)))
+    
 # plotting
 def plot(nucleus, xdata, ydata, bt):
   xlabel = nucleus + ' (ppm)'
@@ -85,9 +83,9 @@ def plot(nucleus, xdata, ydata, bt):
 print('\n\n------------------------------')
 print('POKY 1D Slice At %.3f ppm' % (peak.frequency[1]))
 print('------------------------------\n\n')
-plot(nucleus, xdata, idata, 'At %.3f ppm' % (peak.frequency[0]))
+plot(nucleus, xdata, idata, 'At %.3f ppm' % (peak.frequency[1]))
 
 print('\n\n------------------------------')
 print('POKY 1D Slice At %.3f ppm' % (peak.frequency[0]))
 print('------------------------------\n\n')
-plot(nucleus2, ydata, idata2, 'At %.3f ppm' % (peak.frequency[1]))
+plot(nucleus2, ydata, idata2, 'At %.3f ppm' % (peak.frequency[0]))
