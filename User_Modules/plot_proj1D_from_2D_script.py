@@ -74,11 +74,22 @@ def plot(nucleus, xdata, ydata, bt):
     plt.plot(xdata, ydata, color=c, linestyle='-')
   except:
     plt.plot(xdata, ydata, 'b-')
+  for i, x in enumerate(xdata):
+    y = ydata[i]
+    print('%8.3f %8.3f' % (x, y))
   ax = plt.gca()
   ax.invert_xaxis()
 
   plt.pause(0.1)
   plt.show(block=False)
 
+print('\n\n------------------------------')
+print('POKY 1D Projection between %.3f and %.3f' % (vregion[0][1], vregion[1][1]))
+print('------------------------------\n\n')
 plot(nucleus, xdata, idata, '%.3f and %.3f' % (vregion[0][1], vregion[1][1]))
+
+
+print('\n\n------------------------------')
+print('POKY 1D Projection between %.3f and %.3f' % (vregion[0][0], vregion[1][0]))
+print('------------------------------\n\n')
 plot(nucleus2, ydata, idata2, '%.3f and %.3f' % (vregion[0][0], vregion[1][0]))
