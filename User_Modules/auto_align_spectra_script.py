@@ -49,7 +49,7 @@ aln_xy = aln_sp.nuclei[aln_v.axis_order[0]] + aln_sp.nuclei[aln_v.axis_order[1]]
 
 if ref_xy != aln_xy:
   s.show_message('Error', 
-    f'Nuclei do not match. {ref_xy} <> {aln_xy}. \nUse "xx" and "xy" to match first.')
+    f'Nuclei do not match. {ref_xy} <> {aln_xy}. \nUse "xx" and "xr" to match first.')
   raise SystemError
 
 def project_to_2d_max_abs_simple(array, projection_axes):
