@@ -28,27 +28,17 @@ if ref_sp == None:
   raise SystemError
 ref_nuc = ''.join(ref_sp.nuclei)
 
-specname = s.show_spectrumselectiondialog('Select a target spectrum to normalize', 0)
-tar_sp = name_to_spectrum(specname, s)
-
-if tar_sp == None:
-  raise SystemError
-tar_nuc = ''.join(tar_sp.nuclei)
-
-if ref_nuc != tar_nuc:
-  s.show_message('Error', f'Nuclei mismatch. {ref_nuc} != {tar_nuc}')
+specnames = s.show_spectrumselectiondialog('Select a target spectrum to normalize', 1)
+if specnames == '':
   raise SystemError
 
-new_path = s.save_filedialog('New spectrum name', 'UCSF (*.ucsf);; Any (*)',
-                                  os.path.dirname(tar_sp.data_path))
-if new_path == '':
-  raise SystemError
+specnamelist = specnames.split('\t')
+tar_sp_list = list(map(lambda x: name_to_spectrum(x, s), specnamelist))
 
 mode = s.show_selectionexdialog('Normalization', 'Select a mode', 
             ('Scale range', 'Standardize using mean and deviation', 'Cancel'))
 if mode in [-1, 2]:
   raise SystemError
-
 
 def scale_to_range(array_to_normalize, reference_array):
   min_ref = np.min(reference_array)
@@ -74,15 +64,42 @@ def standardize_against(array_to_normalize, reference_array):
   return standardized_array
 
 ref_dic, ref_data = ng.sparky.read(ref_sp.data_path)
-tar_dic, tar_data = ng.sparky.read(tar_sp.data_path)
 
-if mode == 0:
-  data = scale_to_range(tar_data, ref_data)
-elif mode == 1:
-  data = standardize_against(tar_data, ref_data)
+if len(tar_sp_list) == 1:
+  new_path = s.save_filedialog('New spectrum name', 'UCSF (*.ucsf);; Any (*)',
+                                    os.path.dirname(tar_sp_list[0].data_path))
+  if new_path == '':
+    raise SystemError
+else:
+  prefix = s.show_inputdialog('Prefix', 'Prefix for the normalized spectrum', 
+                     'normalized_')  
+  if prefix == '':
+    raise SystemError
 
-ng.sparky.write(new_path, tar_dic, data, overwrite=True)
+new_path_list = []  
+for tar_sp in tar_sp_list:
+  tar_nuc = ''.join(tar_sp.nuclei)
+
+  if ref_nuc != tar_nuc:
+    s.show_message('Error', 
+                f'Nuclei mismatch. {ref_nuc} != {tar_nuc} from {tar_sp.name}')
+    raise SystemError
+
+  tar_dic, tar_data = ng.sparky.read(tar_sp.data_path)
+
+  if mode == 0:
+    data = scale_to_range(tar_data, ref_data)
+  elif mode == 1:
+    data = standardize_against(tar_data, ref_data)
+
+  if len(tar_sp_list) != 1:
+    tar_dir = os.path.dirname(tar_sp.data_path)
+    tar_base = os.path.basename(tar_sp.data_path)
+    new_path = os.path.join(tar_dir, prefix + tar_base)
+  ng.sparky.write(new_path, tar_dic, data, overwrite=True)
+  new_path_list.append(new_path)
 
 if s.show_message_yes_no('Load data', 
-              'Do you want to load the scaled spectrum?'):
-  s.open_spectrum(new_path)
+              'Do you want to load the normalized spectrum?'):
+  for new_path in new_path_list:
+    s.open_spectrum(new_path)
