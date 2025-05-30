@@ -13,8 +13,10 @@ s = __main__.session
 
 from sputil import name_to_spectrum
 
-opt_list = ('-50%', '-40%', '-30%', '-20%', '-10%', 
-            '+10%', '+20%', '+30%', '+40%', '+50%', 'Cancel')
+opt_list = ('-100%', '-90%', '-80%', '-70%', '-60%',
+            '-50%', '-40%', '-30%', '-20%', '-10%', 
+            '+10%', '+20%', '+30%', '+40%', '+50%', 
+            '+60%', '+70%', '+80%', '+90%', '+100%', 'Cancel')
 ans = s.show_selectionexdialog('Add or delete random peaks', 'Select an option', 
                          opt_list)
 
@@ -35,7 +37,9 @@ for p in s.selected_peaks():
 msg = ''
 import random
 for spec in specs:
-  npeaks = len(spec.peak_list())
+  peaks = spec.peak_list()
+  npeaks = len(peaks)
+  
   if npeaks == 0:
     msg += f'failed: {spec.name} has no peaks.\n'
     continue
@@ -52,8 +56,8 @@ for spec in specs:
     for i in range(ndiff):
       while True:
         idx = random.randint(0, npeaks-1)
-        if spec.peak_list()[idx].is_selected == 0:
-          spec.peak_list()[idx].is_selected = 1
+        if peaks[idx].is_selected == 0:
+          peaks[idx].is_selected = 1
           break
     s.command_characters("")
     msg += f'deleted {ndiff} peaks on {spec.name}: {npeaks} -> {npeaks-ndiff}\n'
