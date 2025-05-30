@@ -56,8 +56,8 @@ for spec in specs:
     for i in range(ndiff):
       while True:
         idx = random.randint(0, npeaks-1)
-        if peaks[idx].is_selected == 0:
-          peaks[idx].is_selected = 1
+        if peaks[idx].selected == 0:
+          peaks[idx].selected = 1
           break
     s.command_characters("")
     msg += f'deleted {ndiff} peaks on {spec.name}: {npeaks} -> {npeaks-ndiff}\n'
