@@ -69,7 +69,7 @@ for i, nseq in enumerate(n1):
     d21, d22 = cs2_dict[nseq]
   except:
     continue
-  y = ((d11-d21)**2 + (d12-d22)**2)**.5
+  y = min(((d11-d21)**2 + (d12-d22)**2)**.5, ((d11-d22)**2 + (d12-d21)**2)**.5)
   xdata.append(nseq)
   ydata.append(y)
   print(f'{nseq}\t{y}')
