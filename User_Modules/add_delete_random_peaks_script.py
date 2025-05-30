@@ -32,7 +32,7 @@ if len(specnames_list) == 0:
 specs = list(map(lambda x: name_to_spectrum(x, s), specnames_list))
 
 for p in s.selected_peaks():
-  p.is_selected = 0
+  p.selected = 0
 
 msg = ''
 import random
