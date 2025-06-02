@@ -13,8 +13,8 @@ s = __main__.session
 
 from sputil import name_to_spectrum
 
-opt_list = ('-60%', '-40%', '-20%', 
-            '+40%', '+80%', '+120%', '+160%', '+200%', 'Cancel')
+opt_list = ('-60%', '-50%', '-40%', '-30%', '-20%', '-10%', 
+            '+50%', '+100%', '+150%', '+200%', '+300%', '+400%', '+500%', 'Cancel')
 ans = s.show_selectionexdialog('Add or delete random peaks', 'Select an option', 
                          opt_list)
 
