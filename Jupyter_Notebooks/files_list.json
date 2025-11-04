@@ -339,5 +339,15 @@
     "author" : "Veda Sheersh Boorla and Costas D. Maranas",
     "image" : "",
     "update_date" : "2025-03-31"
+    },
+"34":
+    {
+    "name" : "AlphaFold2-Rave",
+    "url" : "https://colab.research.google.com/github/pokynmr/POKY/blob/master/Jupyter_Notebooks/fullrunthrough_CSP.ipynb",
+    "description" : "AlphaFold2-RAVE: From Sequence to Boltzmann Ranking.",
+    "source" : "https://github.com/tiwarylab/alphafold2rave",
+    "author" : "Bodhi P. Vani, Akashnathan Aranganathan, Dedi Wang, Pratyush Tiwary",
+    "image" : "",
+    "update_date" : "2026-11-04"
     }
 }
