@@ -139,7 +139,9 @@ def generate_poky_list_nd(nef_data):
 
     poky_df = pd.DataFrame(poky_data)
     poky_output = poky_df.to_string(header=True, index=False)
-    
+    lines = poky_output.split('\n')
+    lines.insert(1, '')
+    poky_output = '\n'.join(lines)
     return poky_output
 
 nef_file = s.open_filedialog('Select an NEF peak list file.', 'NEF file (*.nef)', '')
