@@ -359,5 +359,15 @@
     "author" : "Myeongsang Lee, Joseph W. Schafer, Jeshuwin Prabakaran, Devlina Chakravarty, Madeleine F. Clore, Lauren L. Porter",
     "image" : "",
     "update_date" : "2026-06-11"
+    },
+"36":
+    {
+    "name" : "RFdiffusion v1.1.1",
+    "url" : "https://colab.research.google.com/github/sokrypton/ColabDesign/blob/v1.1.1/rf/examples/diffusion.ipynb",
+    "description" : "RFdiffusion is an open source method for structure generation, with or without conditional information (a motif, target etc).",
+    "source" : "https://github.com/RosettaCommons/RFdiffusion",
+    "author" : "Baker Lab.",
+    "image" : "",
+    "update_date" : "2026-06-11"
     }
 }
